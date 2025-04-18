@@ -1,0 +1,33 @@
+# Root
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv
+.env
+.env.* 
+
+# Logs
+logs
+*.log
+
+# Vite
+client/dist/
+client/node_modules/
+client/.env
+client/.env.* 
+
+# Express
+server/node_modules/
+server/*.log
+server/.env
+server/.env.* 
+server/dist/  # If you build with Babel/TypeScript later
+
+# System
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
