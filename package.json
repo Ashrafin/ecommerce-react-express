@@ -1,7 +1,7 @@
 {
   "name": "ecommerce-react-express",
   "version": "1.0.0",
-  "description": "",
+  "description": "A fullstack e-commerce platform built with React + Express, featuring a backend API and a frontend client",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "keywords": [],
   "author": "Ashrafin Hasib",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "concurrently": "^9.1.2"
   }
