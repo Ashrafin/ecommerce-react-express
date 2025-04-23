@@ -1,21 +1,31 @@
+import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Routes, Route } from "react-router-dom";
 
-import Navigation from "./components/Navigation";
-import AuthGuard from "./components/AuthGuard";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 
-import "./App.css";
 import withSessionManagement from "./hoc/withSessionManagement";
+
+import AuthGuard from "./components/AuthGuard";
+import Container from "./components/Container";
+import Navbar from "./components/Navbar";
+import CartCanvas from "./components/CartCanvas";
 
 function App() {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const ProfileWithAuth = withSessionManagement(Profile);
 
+  useEffect(() => {
+    document.body.setAttribute("data-bs-theme", "light");
+  }, []);
+
   return (
-    <div>
-      <Navigation
+    <Container
+      fluid
+      utilityClasses="w-100 vw-100 d-flex flex-column px-0"
+    >
+      <Navbar
         isAuthenticated={isAuthenticated}
         loginWithRedirect={loginWithRedirect}
         logout={logout}
@@ -31,7 +41,9 @@ function App() {
           }
         />
       </Routes>
-    </div>
+      <CartCanvas />
+      <div style={{ height: "2000px" }}></div>
+    </Container>
   );
 }
 
