@@ -12,7 +12,7 @@ import Container from "./components/Container";
 import Navbar from "./components/Navbar";
 import CartCanvas from "./components/CartCanvas";
 
-function App() {
+const App = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const ProfileWithAuth = withSessionManagement(Profile);
 
@@ -42,9 +42,8 @@ function App() {
         />
       </Routes>
       <CartCanvas />
-      <div style={{ height: "2000px" }}></div>
     </Container>
   );
-}
+};
 
 export default App;

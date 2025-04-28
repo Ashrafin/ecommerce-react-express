@@ -1,0 +1,25 @@
+.session-popup {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1000;
+  min-width: 300px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  transform: translateX(100%);
+  opacity: 0;
+  overflow: hidden;
+}
+
+.session-popup.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.session-progress-bar {
+  width: 100%;
+  transition: width 10s linear;
+}
+
+.h-2 {
+  height: 0.125rem;
+}

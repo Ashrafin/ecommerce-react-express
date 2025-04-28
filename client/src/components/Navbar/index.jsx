@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
-import CartItemCount from "../CartItemCount";
+import { Link, useLocation } from "react-router-dom";
+import CartItemCount from "@/components/CartItemCount";
 
 const Navbar = ({ isAuthenticated, loginWithRedirect, logout }) => {
+  const location = useLocation();
   const currentTheme = document.body.getAttribute("data-bs-theme");
 
   return (
@@ -25,7 +26,7 @@ const Navbar = ({ isAuthenticated, loginWithRedirect, logout }) => {
                   {isAuthenticated && (
                     <>
                       <li>
-                        <Link className="dropdown-item fs-6" to="/profile">Profile</Link>
+                        <Link className={`dropdown-item ${location.pathname === "/profile" ? "active" : ""} fs-6`} to="/profile">Profile</Link>
                       </li>
                       <li>
                         <button className="dropdown-item fs-6" onClick={() => {logout({ returnTo: window.location.origin })}}>
