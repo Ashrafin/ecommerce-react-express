@@ -11,6 +11,7 @@ import AuthGuard from "./components/AuthGuard";
 import Container from "./components/Container";
 import Navbar from "./components/Navbar";
 import CartCanvas from "./components/CartCanvas";
+import ProductPage from "./pages/Product";
 
 const App = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -32,6 +33,7 @@ const App = () => {
       />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="product/:id" element={<ProductPage />} />
         <Route
           path="/profile"
           element={

@@ -1,0 +1,15 @@
+.product-card-placeholder-img {
+  height: 220px;
+}
+
+.product-card-placeholder-text-sm {
+  min-height: 14px;
+}
+
+.product-card-placeholder-text-md {
+  min-height: 18px;
+}
+
+.product-card-placeholder-text-lg {
+  min-height: 20px;
+}

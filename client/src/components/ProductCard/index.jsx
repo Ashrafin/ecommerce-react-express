@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import StarRatings from "@/components/StarRatings";
 import "@/styles/ProductCard.styles.css";
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
+
   const _renderPriceWithDiscount = () => {
     if (!product.discountPercentage) return <></>;
     const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
@@ -36,12 +39,17 @@ const ProductCard = ({ product }) => {
     );
   };
 
+  const goToProductPage = (productId) => {
+    navigate(`/product/${productId}`)
+  };
+
   return (
     <div className="col">
-      <div className="card h-100 product-card">
+      <div className="card h-100">
         <img
           src={product.thumbnail}
-          className="card-img-top"
+          className="card-img-top object-fit-cover"
+          style={{ height: 220, objectPosition: "center" }}
           alt={product.title}
         />
         <div className="card-body border-top">
@@ -50,11 +58,17 @@ const ProductCard = ({ product }) => {
           <h5 className="card-title text-body-emphasis text-truncate mb-1">{product.title}</h5>
           <h6 className="card-subtitle text-body-secondary text-truncate fs-6 mb-0">{product.description}</h6>
           <StarRatings rating={product.rating} reviewCount={product.reviews.length} />
-          <div className="d-flex mt-2 mb-3">
+          <div className="d-flex mt-2 mb-2">
             {_renderPriceWithDiscount()}
             {_renderOriginalPrice()}
           </div>
-          <button type="button" className="btn btn-primary btn-sm">View Details</button>
+          <button
+            type="button"
+            className="btn btn-link btn-sm p-0"
+            onClick={() => goToProductPage(product.id)}
+          >
+            View Details
+          </button>
         </div>
       </div>
     </div>
