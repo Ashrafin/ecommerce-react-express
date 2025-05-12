@@ -13,3 +13,7 @@
 .transition-all-linear {
   transition: all 0.2s linear;
 }
+
+.w-fit-content {
+  width: fit-content;
+}

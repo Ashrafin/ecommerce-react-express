@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
   const _renderCategory = () => {
     if (!product.category) return <></>;
 
-    return <span className="badge rounded-pill text-bg-secondary fw-normal mb-2 me-1">{product.category}</span>;
+    return <span className="badge rounded-pill text-bg-light fw-normal mb-2 me-1 border border-light-subtle">{product.category}</span>;
   };
 
   const _renderTags = () => {
@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
 
     return (
       <>
-        {filteredTags.map((tag) => <span key={tag} className="badge rounded-pill text-bg-primary fw-normal mb-2 me-1">{tag}</span>)}
+        {filteredTags.map((tag) => <span key={tag} className="badge rounded-pill text-bg-light fw-normal mb-2 me-1 border border-light-subtle">{tag}</span>)}
       </>
     );
   };
@@ -57,7 +57,7 @@ const ProductCard = ({ product }) => {
           {_renderTags()}
           <h5 className="card-title text-body-emphasis text-truncate mb-1">{product.title}</h5>
           <h6 className="card-subtitle text-body-secondary text-truncate fs-6 mb-0">{product.description}</h6>
-          <StarRatings rating={product.rating} reviewCount={product.reviews.length} />
+          <StarRatings rating={product.rating} reviewCount={product.reviews.length} starSize="sm" />
           <div className="d-flex mt-2 mb-2">
             {_renderPriceWithDiscount()}
             {_renderOriginalPrice()}

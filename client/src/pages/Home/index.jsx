@@ -46,10 +46,10 @@ const HomePage = () => {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    console.log(products);
-    console.log(isLoading);
-  }, [products, isLoading]);
+  // useEffect(() => {
+  //   console.log(products);
+  //   console.log(isLoading);
+  // }, [products, isLoading]);
 
   return (
     <Container utilityClasses="py-5">
