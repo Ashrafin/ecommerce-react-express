@@ -8,33 +8,40 @@ const StarRatings = ({ rating, reviewCount, starSize }) => {
 
   useEffect(() => {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="ratings tooltip"]');
-    const tooltipInstance = [...tooltipTriggerList].map((tooltipTriggerEl) => new Tooltip(tooltipTriggerEl));
+    const tooltipList = [...tooltipTriggerList].map((tooltipTriggerEl) => new Tooltip(tooltipTriggerEl));
 
     return () => {
-      tooltipInstance?.dispose();
-    }
+      tooltipList.forEach((tooltip) => tooltip.dispose());
+    };
   }, []);
+
+  const starSizeClass = starSize === "sm" ? "fs-7" : starSize === "lg" ? "fs-6" : "";
 
   return (
     <div className="d-flex align-items-center">
-      <div className="d-flex" data-bs-toggle="ratings tooltip" data-bs-placement="right" data-bs-title={`${rating} out of 5`}>
+      <div
+        className="d-flex"
+        data-bs-toggle="ratings tooltip"
+        data-bs-placement="right"
+        data-bs-title={`${rating} out of 5`}
+      >
         {[...Array(filledStars)].map((_, i) => (
           <i
             key={`full-${i}`}
-            className={`bi bi-star-fill text-warning ${starSize === "sm" ? "fs-7" : ""} ${starSize === "lg" ? "fs-6" : ""}`}
+            className={`bi bi-star-fill text-warning ${starSizeClass}`}
           />
         ))}
         {halfStar && (
-          <i className={`bi bi-star-half text-warning ${starSize === "sm" ? "fs-7" : ""} ${starSize === "lg" ? "fs-6" : ""}`} />
+          <i className={`bi bi-star-half text-warning ${starSizeClass}`} />
         )}
         {[...Array(emptyStars)].map((_, i) => (
           <i
             key={`empty-${i}`}
-            className={`bi bi-star text-warning ${starSize === "sm" ? "fs-7" : ""} ${starSize === "lg" ? "fs-6" : ""}`}
+            className={`bi bi-star text-warning ${starSizeClass}`}
           />
         ))}
       </div>
-      <p className={`text-secondary fw-normal ${starSize === "sm" ? "fs-7" : ""} ${starSize === "lg" ? "fs-6" : ""} ms-1 my-0`}>
+      <p className={`text-secondary fw-normal ${starSizeClass} ms-1 my-0`}>
         {reviewCount} Reviews
       </p>
     </div>
