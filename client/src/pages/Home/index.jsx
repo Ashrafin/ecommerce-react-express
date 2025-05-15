@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import Container from "@/components/Container";
-import ProductCard from "@/components/ProductCard";
-import Placeholder from "@/components/Placeholder";
+import Container from "@/components/ui/Container";
+import ProductCard from "./components/ProductCard";
+import Placeholder from "@/components/ui/Placeholder";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);

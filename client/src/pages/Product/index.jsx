@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Container from "@/components/Container";
-import ProductCarousel from "@/components/ProductCarousel";
-import Breadcrumb from "@/components/Breadcrumb";
-import ProductDetail from "@/components/ProductDetail";
+import Container from "@/components/ui/Container";
+import ProductCarousel from "./components/ProductCarousel";
+import Breadcrumb from "@/components/ui/Breadcrumb";
+import ProductInformation from "./components/ProductInformation";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -14,7 +14,14 @@ const ProductPage = () => {
   const _renderBreadcrumb = () => {
     if (!product?.title) return <></>;
 
-    return <Breadcrumb product={product} />;
+    return (
+      <Breadcrumb
+        items={[
+          { label: "Home", to: "/" },
+          { label: product.title }
+        ]}
+      />
+    );
   };
 
   const _renderCarousel = () => {
@@ -26,7 +33,7 @@ const ProductPage = () => {
   const _renderDetails = () => {
     if (!product) return <></>;
 
-    return <ProductDetail product={product} />;
+    return <ProductInformation product={product} />;
   };
 
   useEffect(() => {

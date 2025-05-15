@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import CartItemCount from "@/components/CartItemCount";
+import CartItemCount from "@/components/ui/CartItemCount";
 
 const Navbar = ({ isAuthenticated, loginWithRedirect, logout }) => {
   const location = useLocation();

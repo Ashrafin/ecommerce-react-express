@@ -7,10 +7,10 @@ import Profile from "./pages/Profile";
 
 import withSessionManagement from "./hoc/withSessionManagement";
 
-import AuthGuard from "./components/AuthGuard";
-import Container from "./components/Container";
-import Navbar from "./components/Navbar";
-import CartCanvas from "./components/CartCanvas";
+import AuthGuard from "./components/shared/AuthGuard";
+import Container from "./components/ui/Container";
+import Navbar from "./components/layout/Navbar";
+import CartCanvas from "./components/shared/CartCanvas";
 import ProductPage from "./pages/Product";
 
 const App = () => {
