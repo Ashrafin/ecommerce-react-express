@@ -1,70 +1,71 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Container from "@/components/ui/Container";
-import ProductCarousel from "./components/ProductCarousel";
 import Breadcrumb from "@/components/ui/Breadcrumb";
+import Placeholder from "@/components/ui/Placeholder";
+import RenderWithFallback from "@/components/shared/RenderWithFallback";
+import ProductCarousel from "./components/ProductCarousel";
 import ProductInformation from "./components/ProductInformation";
+import useProduct from "@/hooks/useProduct";
 
 const ProductPage = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const { product, isLoading, hasError, error } = useProduct(id);
 
   const _renderBreadcrumb = () => {
-    if (!product?.title) return <></>;
-
     return (
-      <Breadcrumb
-        items={[
-          { label: "Home", to: "/" },
-          { label: product.title }
-        ]}
-      />
+      <RenderWithFallback
+        isLoading={isLoading}
+        hasError={hasError || !product?.title}
+        fallback={<Placeholder type="breadcrumb" />}
+      >
+        <Breadcrumb
+          items={[
+            { label: "Home", to: "/" },
+            { label: product?.title }
+          ]}
+        />
+      </RenderWithFallback>
     );
   };
 
   const _renderCarousel = () => {
-    if (!product?.images?.length) return <></>;
-
-    return <ProductCarousel product={product} />;
+    return (
+      <RenderWithFallback
+        isLoading={isLoading}
+        hasError={hasError || !product?.images?.length}
+        fallback={<Placeholder type="carousel" />}
+      >
+        <ProductCarousel images={product?.images} />
+      </RenderWithFallback>
+    );
   };
 
-  const _renderDetails = () => {
-    if (!product) return <></>;
-
-    return <ProductInformation product={product} />;
+  const _renderProductDetails = () => {
+    return (
+      <RenderWithFallback
+        isLoading={isLoading}
+        hasError={hasError}
+        fallback={<Placeholder type="product details" />}
+      >
+        <ProductInformation product={product} />
+      </RenderWithFallback>
+    );
   };
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`https://dummyjson.com/products/${id}`);
-        const resData = await response.json();
-        const data = resData;
-        setProduct(data);
-        setIsLoading(false);
-        setError(false);
-      } catch (err) {
-        setError(true);
-        console.error("Error fetching product: ", err);
-      }
-    };
-
-    fetchProduct();
-  }, []);
-
-  useEffect(() => {
-    console.log(product);
-  }, [product, isLoading]);
+  
+  // useEffect(() => {
+  //   console.log(product);
+  // }, [product, isLoading]);
 
   return (
-    <Container utilityClasses="p-4">
-      {_renderBreadcrumb()}
-      <div className="row">
-        {_renderCarousel()}
-        {_renderDetails()}
-      </div>
+    <Container fluid>
+      <Container utilityClasses="py-4 px-3 px-md-4">
+        {_renderBreadcrumb()}
+        <div className="row">
+          {_renderCarousel()}
+          {_renderProductDetails()}
+        </div>
+      </Container>
     </Container>
   );
 };

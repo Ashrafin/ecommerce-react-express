@@ -13,3 +13,13 @@
 .product-card-placeholder-text-lg {
   min-height: 20px;
 }
+
+.carousel-placeholder {
+  height: 370px;
+}
+
+.detail-title-placeholder,
+.detail-price-placeholder,
+.detail-button-placeholder {
+  height: 30px;
+}
