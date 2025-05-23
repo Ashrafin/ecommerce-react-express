@@ -1,8 +1,17 @@
-/* .product-card {
-  cursor: pointer;
-  transition: all 0.2s linear;
+.product-card {
+  overflow: hidden;
 }
 
-.product-card:hover {
-  box-shadow: var(--bs-box-shadow);
-} */
+.product-card .card-img-top {
+  height: 200px;
+}
+
+.product-card .card-body {
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+}
+
+.product-card .discount-percentage {
+  top: 15px;
+  left: 15px;
+}

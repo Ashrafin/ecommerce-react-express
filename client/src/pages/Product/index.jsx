@@ -7,16 +7,29 @@ import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCarousel from "./components/ProductCarousel";
 import ProductInformation from "./components/ProductInformation";
 import useProduct from "@/hooks/useProduct";
+import useRecommendedProducts from "@/hooks/useRecommendedProducts";
+import RecommendedProducts from "./components/RecommendedProducts";
 
 const ProductPage = () => {
   const { id } = useParams();
-  const { product, isLoading, hasError, error } = useProduct(id);
+  const {
+    product,
+    isLoading: productDetailsLoading,
+    hasError: productDetailsHasError,
+    error: productDetailsError
+  } = useProduct(id);
+  const {
+    similarProducts,
+    isLoading: similarProductsLoading,
+    hasError: similarProductsHasError,
+    error: similarProductsError
+  } = useRecommendedProducts(product?.category, product?.id);
 
   const _renderBreadcrumb = () => {
     return (
       <RenderWithFallback
-        isLoading={isLoading}
-        hasError={hasError || !product?.title}
+        isLoading={productDetailsLoading}
+        hasError={productDetailsHasError || !product?.title}
         fallback={<Placeholder type="breadcrumb" />}
       >
         <Breadcrumb
@@ -32,8 +45,8 @@ const ProductPage = () => {
   const _renderCarousel = () => {
     return (
       <RenderWithFallback
-        isLoading={isLoading}
-        hasError={hasError || !product?.images?.length}
+        isLoading={productDetailsLoading}
+        hasError={productDetailsHasError || !product?.images?.length}
         fallback={<Placeholder type="carousel" />}
       >
         <ProductCarousel images={product?.images} />
@@ -44,28 +57,45 @@ const ProductPage = () => {
   const _renderProductDetails = () => {
     return (
       <RenderWithFallback
-        isLoading={isLoading}
-        hasError={hasError}
+        isLoading={productDetailsLoading}
+        hasError={productDetailsHasError || !product}
         fallback={<Placeholder type="product details" />}
       >
         <ProductInformation product={product} />
       </RenderWithFallback>
     );
   };
+
+  const _renderRecommendedProducts = () => {
+    return (
+      <RenderWithFallback
+        isLoading={similarProductsLoading}
+        hasError={similarProductsHasError || !similarProducts?.length}
+        fallback={<div>Loading...</div>}
+      >
+        <div className="d-flex flex-column my-5">
+          <h4 className="fs-4 fw-semibold text-dark-emphasis mb-4">Recommended</h4>
+          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <RecommendedProducts products={similarProducts} />
+          </div>
+        </div>
+      </RenderWithFallback>
+    );
+  };
   
-  // useEffect(() => {
-  //   console.log(product);
-  // }, [product, isLoading]);
+  useEffect(() => {
+    console.log("product: ", product);
+    console.log("similar products: ", similarProducts);
+  }, [product, similarProducts]);
 
   return (
-    <Container fluid>
-      <Container utilityClasses="py-4 px-3 px-md-4">
-        {_renderBreadcrumb()}
-        <div className="row">
-          {_renderCarousel()}
-          {_renderProductDetails()}
-        </div>
-      </Container>
+    <Container utilityClasses="py-4 px-3 px-md-4">
+      {_renderBreadcrumb()}
+      <div className="row">
+        {_renderCarousel()}
+        {_renderProductDetails()}
+      </div>
+      {_renderRecommendedProducts()}
     </Container>
   );
 };

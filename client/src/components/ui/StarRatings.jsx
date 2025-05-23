@@ -41,7 +41,7 @@ const StarRatings = ({ rating, reviewCount, starSize }) => {
           />
         ))}
       </div>
-      <p className={`text-secondary fw-normal ${starSizeClass} ms-1 my-0`}>
+      <p className={`text-body-tertiary inter fw-normal ${starSizeClass} ms-1 my-0`}>
         {reviewCount} Reviews
       </p>
     </div>

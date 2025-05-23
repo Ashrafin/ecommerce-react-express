@@ -3,23 +3,27 @@ import "@/styles/Placeholder.styles.css";
 const ProductCardPlaceholder = () => {
   return (
     <div className="col">
-      <div className="card overflow-hidden" aria-hidden="true">
-        <div className="placeholder-wave product-card-placeholder-img d-flex">
-          <span className="placeholder col-12 h-100 bg-secondary"></span>
+      <div className="card product-card-placeholder border-1 border-light-subtle rounded-5 shadow-sm position-relative bg-secondary-subtle" aria-hidden="true">
+        <div style={{ top: 15, left: 15 }} className="placeholder-wave d-flex position-absolute w-100">
+          <span className="placeholder placeholder-discount w-25 rounded-4 bg-danger"></span>
         </div>
-        <div className="card-body">
-          <h5 className="card-title placeholder-wave d-flex mb-2">
-            <span className="placeholder product-card-placeholder-text-md col-3 me-2 rounded-5 bg-secondary"></span>
-            <span className="placeholder product-card-placeholder-text-md col-3 rounded-5 bg-secondary"></span>
+        <div className="placeholder-wave placeholder-img d-flex">
+          <span className="placeholder w-100 h-100 bg-secondary-subtle"></span>
+        </div>
+        <div className="card-body border-top border-1 border-light-subtle bg-white">
+          <h5 className="card-title placeholder-wave d-flex mb-3">
+            <span className="placeholder placeholder-categories w-25 me-2 rounded-4 bg-secondary-subtle"></span>
+            <span className="placeholder placeholder-categories w-25 rounded-4 bg-secondary-subtle"></span>
           </h5>
-          <p className="card-text placeholder-wave d-flex flex-column">
-            <span className="placeholder product-card-placeholder-text-lg col-10 mb-1 rounded-2 bg-secondary"></span>
-            <span className="placeholder product-card-placeholder-text-lg col-12 mb-1 rounded-2 bg-secondary"></span>
-            <span className="placeholder product-card-placeholder-text-sm col-4 mb-3 rounded-2 bg-secondary"></span>
-            <span className="placeholder product-card-placeholder-text-md col-6 rounded-2 bg-secondary"></span>
+          <p className="card-text placeholder-wave d-flex flex-column mb-0">
+            <span className="placeholder placeholder-title w-75 rounded-4 bg-secondary mb-1"></span>
+            <span className="placeholder placeholder-desc w-100 rounded-4 bg-secondary-subtle mb-1"></span>
+            <span className="placeholder placeholder-rating w-50 rounded-4 bg-secondary-subtle"></span>
+            <span className="placeholder placeholder-price w-50 rounded-4 bg-success-subtle my-3"></span>
           </p>
           <p className="placeholder-wave d-flex mb-0">
-            <span className="placeholder product-card-placeholder-text-sm col-4 rounded-2 bg-secondary"></span>
+            <span className="placeholder placeholder-button w-75 rounded-4 bg-info-subtle me-1"></span>
+            <span className="placeholder placeholder-button w-25 rounded-4 bg-info-subtle ms-1"></span>
           </p>
         </div>
       </div>

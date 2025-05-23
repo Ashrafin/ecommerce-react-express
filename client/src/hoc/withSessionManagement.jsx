@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import useAutoLogout from "../hooks/useAutoLogout";
-import useSessionTimer from "../hooks/useSessionTimer";
-import useBackendAuth from "../hooks/useBackendAuth";
+import useAutoLogout from "@/hooks/useAutoLogout";
+import useSessionTimer from "@/hooks/useSessionTimer";
+import useBackendAuth from "@/hooks/useBackendAuth";
 import SessionPopup from "@/components/shared/SessionPopup";
 
 const withSessionManagement = (Component) => {

@@ -2,18 +2,22 @@
   font-size: 0.875rem !important;
 }
 
-/* .hover-shadow:hover {
-  box-shadow: var(--bs-box-shadow);
-}
-
-.hover-shadow-sm:hover {
-  box-shadow: var(--bs-box-shadow-sm);
-} */
-
 .transition-all-linear {
   transition: all 0.2s linear;
 }
 
 .w-fit-content {
   width: fit-content;
+}
+
+.urbanist {
+  font-family: "Urbanist", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.inter {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }

@@ -17,7 +17,7 @@ const CartItemCount = ({ count }) => {
       <span className="position-absolute start-100 translate-middle badge rounded-pill bg-secondary text-light fw-normal t-5">
         {cartCount()}
       </span>
-      <i className="bi bi-bag-fill fs-5 text-light" />
+      <i className="bi bi-bag-fill fs-5 text-info-emphasis" />
     </div>
   );
 };
