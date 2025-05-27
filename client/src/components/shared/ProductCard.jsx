@@ -43,13 +43,17 @@ const ProductCard = ({ product }) => {
     navigate(`/product/${productId}`)
   };
 
+  const discountPercentage = Math.floor(product.discountPercentage);
+
   return (
     <div className="col">
-      <div className="card product-card h-100 border-1 border-light-subtle rounded-5 shadow-sm position-relative bg-light">
-        <div className="d-flex flex-row discount-percentage rounded-5 bg-danger bg-opacity-25 py-1 px-2 position-absolute">
-          <i className="bi bi-tag-fill text-danger fs-7 me-2"></i>
-          <p className="text-danger urbanist fw-bold fs-7 mb-0">-{Math.floor(product.discountPercentage)}%</p>
-        </div>
+      <div className="card product-card h-100 border-1 border-light-subtle rounded-5 position-relative bg-light">
+        {discountPercentage >= 1 && (
+          <div className="d-flex flex-row discount-percentage rounded-5 bg-danger bg-opacity-25 py-1 px-2 position-absolute">
+            <i className="bi bi-tag-fill text-danger fs-7 me-2"></i>
+            <p className="text-danger urbanist fw-bold fs-7 mb-0">-{discountPercentage}%</p>
+          </div>
+        )}
         <img
           src={product.thumbnail}
           className="card-img-top object-fit-contain bg-light"
@@ -68,7 +72,7 @@ const ProductCard = ({ product }) => {
           <div className="d-flex justify-content-between">
             <button
               type="button"
-              className="btn btn-sm bg-info-subtle text-info-emphasis border-0 rounded-pill fw-medium flex-grow-1 me-1"
+              className="btn btn-sm bg-info-subtle text-info-emphasis border-0 rounded-pill inter fw-medium flex-grow-1 me-1"
               onClick={() => goToProductPage(product.id)}
             >
               View Details

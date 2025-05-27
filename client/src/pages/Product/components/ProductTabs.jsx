@@ -3,6 +3,7 @@ import Tab from "bootstrap/js/dist/tab";
 import ReviewsTab from "./ReviewsTab";
 import ShippingTab from "./ShippingTab";
 import DetailsTab from "./DetailsTab";
+import "@/styles/ProductTabs.styles.css";
 
 const ProductTabs = ({
   weight,
@@ -23,11 +24,11 @@ const ProductTabs = ({
 
   return (
     <>
-      <div style={{ whiteSpace: "nowrap" }} className="d-flex rounded-5 bg-body-tertiary w-100 overflow-x-scroll p-1 mb-4">
-        <ul style={{ display: "contents" }} className="nav nav-pills m-0" id="details-tab" role="tablist">
-          <li className="nav-item" role="presentation">
+      <div className="d-flex product-tabs rounded-5 bg-light w-100 overflow-x-scroll p-2 mb-4">
+        <ul className="nav nav-pills m-0" id="details-tab" role="tablist">
+          <li className="nav-item flex-fill" role="presentation">
             <button
-              className="nav-link active rounded-5"
+              className="nav-link text-info-emphasis urbanist fw-semibold rounded-pill w-100 active"
               id="product-detail-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-product-details"
@@ -39,9 +40,9 @@ const ProductTabs = ({
               Product Details
             </button>
           </li>
-          <li className="nav-item" role="presentation">
+          <li className="nav-item flex-fill" role="presentation">
             <button
-              className="nav-link rounded-5"
+              className="nav-link text-info-emphasis urbanist fw-semibold rounded-pill w-100"
               id="shipping-information-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-shipping-information"
@@ -53,9 +54,9 @@ const ProductTabs = ({
               Shipping Information
             </button>
           </li>
-          <li className="nav-item" role="presentation">
+          <li className="nav-item flex-fill" role="presentation">
             <button
-              className="nav-link rounded-5"
+              className="nav-link text-info-emphasis urbanist fw-semibold rounded-pill w-100"
               id="reviews-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-reviews"

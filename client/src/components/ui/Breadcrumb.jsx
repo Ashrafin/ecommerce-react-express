@@ -7,10 +7,10 @@ const Breadcrumb = ({ items }) => {
         {items.map((item, i) => (
           <li
             key={i}
-            className={`breadcrumb-item ${i === items.length - 1 ? "active" : ""}`}
+            className={`breadcrumb-item urbanist fw-semibold fs-6 ${i === items.length - 1 ? "text-secondary active" : ""}`}
             aria-current={i === items.length - 1 ? "page" : undefined}
           >
-            {item.to ? <Link to={item.to}>{item.label}</Link> : item.label}
+            {item.to ? <Link to={item.to} className="text-body-tertiary link-offset-2 link-underline link-underline-opacity-0">{item.label}</Link> : item.label}
           </li>
         ))}
       </ol>

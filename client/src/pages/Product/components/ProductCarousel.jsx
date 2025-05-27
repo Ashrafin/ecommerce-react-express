@@ -25,18 +25,19 @@ const ProductCarousel = ({ images }) => {
       <div
         ref={carouselRef}
         id="productCarousel"
-        className="carousel slide carousel-dark bg-light rounded-3"
+        className="carousel slide carousel-dark bg-light rounded-5"
         data-bs-ride="carousel"
       >
         {images.length > 1 && (
           <div className="carousel-indicators">
             {images.map((_, i) => (
               <button
+                style={{ height: 8, width: 8 }}
                 key={i}
                 type="button"
                 data-bs-target="#productCarousel"
                 data-bs-slide-to={i}
-                className={i === 0 ? "active" : ""}
+                className={`rounded-circle bg-secondary ${i === 0 ? "active" : ""}`}
                 aria-current={i === 0 ? "true" : undefined}
                 aria-label={`Slide ${i + 1}`}
               />
@@ -51,7 +52,7 @@ const ProductCarousel = ({ images }) => {
             >
               <img
                 src={img}
-                className="d-block w-100 object-fit-contain"
+                className="d-block w-100 object-fit-contain p-5"
                 style={{ maxHeight: 460 }}
                 alt={`Product Image ${i + 1}`}
               />
@@ -66,7 +67,7 @@ const ProductCarousel = ({ images }) => {
               data-bs-target="#productCarousel"
               data-bs-slide="prev"
             >
-              <span className="carousel-control-prev-icon" aria-hidden="true" />
+              <i className="bi bi-arrow-left-circle-fill fs-4 text-secondary" aria-hidden="true"></i>
               <span className="visually-hidden">Previous</span>
             </button>
             <button
@@ -75,7 +76,7 @@ const ProductCarousel = ({ images }) => {
               data-bs-target="#productCarousel"
               data-bs-slide="next"
             >
-              <span className="carousel-control-next-icon" aria-hidden="true" />
+              <i className="bi bi-arrow-right-circle-fill fs-4 text-secondary" aria-hidden="true"></i>
               <span className="visually-hidden">Next</span>
             </button>
           </>

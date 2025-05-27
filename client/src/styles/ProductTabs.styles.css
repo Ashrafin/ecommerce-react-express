@@ -1,0 +1,12 @@
+.product-tabs {
+  white-space: nowrap;
+}
+
+.product-tabs ul.nav {
+  display: contents;
+}
+
+.product-tabs .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: var(--bs-info-bg-subtle);
+  color: var(--bs-info-text-emphasis);
+}

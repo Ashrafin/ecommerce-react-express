@@ -3,7 +3,7 @@
 }
 
 .placeholder-img {
-  height: 200px;
+  min-height: 200px;
 }
 
 .product-card-placeholder .card-body {
@@ -13,12 +13,17 @@
 
 .product-card-placeholder .placeholder-categories,
 .product-card-placeholder .placeholder-desc,
-.product-card-placeholder .placeholder-rating {
+.product-card-placeholder .placeholder-rating,
+.product-details-placeholder .placeholder-brand,
+.product-details-placeholder .placeholder-categories {
   min-height: 20px;
 }
 
 .product-card-placeholder .placeholder-title,
-.product-card-placeholder .placeholder-price {
+.product-card-placeholder .placeholder-price,
+.product-details-placeholder .placeholder-ratings,
+.product-details-placeholder .placeholder-desc,
+.recommended-products-placeholder .placeholder-title {
   min-height: 22px;
 }
 
@@ -27,12 +32,24 @@
   min-height: 26px;
 }
 
-.carousel-placeholder {
-  height: 370px;
+.placeholder-carousel {
+  min-height: 370px;
 }
 
-.detail-title-placeholder,
-.detail-price-placeholder,
-.detail-button-placeholder {
-  height: 30px;
+.breadcrumb-placeholder .placeholder {
+  min-height: 18px;
+}
+
+.product-details-placeholder .placeholder-title,
+.product-details-placeholder .placeholder-price,
+.product-details-placeholder .placeholder-button {
+  min-height: 30px;
+}
+
+.product-details-placeholder .placeholder-tab {
+  min-height: 36px;
+}
+
+.product-details-placeholder .placeholder-info {
+  min-height: 100px;
 }

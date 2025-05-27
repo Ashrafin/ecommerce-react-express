@@ -14,7 +14,9 @@ const CartItemCount = ({ count }) => {
       data-bs-target="#cartCanvas"
       aria-controls="cartCanvas"
     >
-      <span className="position-absolute start-100 translate-middle badge rounded-pill bg-secondary text-light fw-normal t-5">
+      <span
+        className="position-absolute start-100 translate-middle badge rounded-pill bg-danger inter text-light fw-normal t-5 border border-1 border-light-subtle"
+      >
         {cartCount()}
       </span>
       <i className="bi bi-bag-fill fs-5 text-info-emphasis" />

@@ -71,10 +71,10 @@ const ProductPage = () => {
       <RenderWithFallback
         isLoading={similarProductsLoading}
         hasError={similarProductsHasError || !similarProducts?.length}
-        fallback={<div>Loading...</div>}
+        fallback={<Placeholder type="recommended products" />}
       >
         <div className="d-flex flex-column my-5">
-          <h4 className="fs-4 fw-semibold text-dark-emphasis mb-4">Recommended</h4>
+          <h4 className="fs-4 fw-bold urbanist text-body-emphasis mb-4">Recommended</h4>
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <RecommendedProducts products={similarProducts} />
           </div>
@@ -83,10 +83,11 @@ const ProductPage = () => {
     );
   };
   
-  useEffect(() => {
-    console.log("product: ", product);
-    console.log("similar products: ", similarProducts);
-  }, [product, similarProducts]);
+  // remember to remove this
+  // useEffect(() => {
+  //   console.log("details loading: ", productDetailsLoading);
+  //   console.log("similar products: ", similarProducts);
+  // }, [product, similarProducts]);
 
   return (
     <Container utilityClasses="py-4 px-3 px-md-4">
