@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { AnimatePresence } from "motion/react";
+import useProducts from "@/hooks/useProducts";
 import Container from "@/components/ui/Container";
 import Placeholder from "@/components/ui/Placeholder";
 import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCard from "@/components/shared/ProductCard";
-import useProducts from "@/hooks/useProducts";
+import StaggeredFadeIn from "@/animations/StaggeredFadeIn";
 
 const HomePage = () => {
   const [limit, setLimit] = useState(20);
@@ -21,9 +23,17 @@ const HomePage = () => {
           </>
         }
       >
-        <>
-          {products?.map((product) => <ProductCard key={product.id} product={product} />)}
-        </>
+        <AnimatePresence mode="sync">
+          {products?.map((product, i) => (
+            <StaggeredFadeIn
+              key={product.id}
+              identifier={`card-${product.id}`}
+              index={i}
+            >
+              <ProductCard product={product} />
+            </StaggeredFadeIn>
+          ))}
+        </AnimatePresence>
       </RenderWithFallback>
     );
   };
@@ -35,11 +45,13 @@ const HomePage = () => {
   // }, [products, isLoading]);
 
   return (
-    <Container utilityClasses="py-5 px-3 px-md-4">
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
-        {_renderProducts()}
-      </div>
-    </Container>
+    <>
+      <Container utilityClasses="py-5 px-3 px-md-4">
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+          {_renderProducts()}
+        </div>
+      </Container>
+    </>
   );
 };
 

@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import useProduct from "@/hooks/useProduct";
+import useRecommendedProducts from "@/hooks/useRecommendedProducts";
 import Container from "@/components/ui/Container";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Placeholder from "@/components/ui/Placeholder";
 import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCarousel from "./components/ProductCarousel";
 import ProductInformation from "./components/ProductInformation";
-import useProduct from "@/hooks/useProduct";
-import useRecommendedProducts from "@/hooks/useRecommendedProducts";
 import RecommendedProducts from "./components/RecommendedProducts";
 
 const ProductPage = () => {
@@ -90,14 +90,16 @@ const ProductPage = () => {
   // }, [product, similarProducts]);
 
   return (
-    <Container utilityClasses="py-4 px-3 px-md-4">
-      {_renderBreadcrumb()}
-      <div className="row">
-        {_renderCarousel()}
-        {_renderProductDetails()}
-      </div>
-      {_renderRecommendedProducts()}
-    </Container>
+    <>
+      <Container utilityClasses="py-4 px-3 px-md-4">
+        {_renderBreadcrumb()}
+        <div className="row">
+          {_renderCarousel()}
+          {_renderProductDetails()}
+        </div>
+        {_renderRecommendedProducts()}
+      </Container>
+    </>
   );
 };
 
