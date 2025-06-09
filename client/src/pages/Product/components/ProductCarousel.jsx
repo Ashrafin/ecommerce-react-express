@@ -1,87 +1,111 @@
-import { useEffect, useRef } from "react";
-import Carousel from "bootstrap/js/dist/carousel";
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { easings } from "@/animations/easings";
+import "@/styles/ProductCarousel.styles.css";
 
 const ProductCarousel = ({ images }) => {
-  const carouselRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
 
-  useEffect(() => {
-    let carouselInstance;
+  const paginateImage = (newDirection) => {
+    setDirection(newDirection);
+    setCurrentIndex((prevIndex) => (prevIndex + newDirection + images.length) % images.length);
+  };
 
-    if (carouselRef.current && images?.length > 0) {
-      carouselInstance = new Carousel(carouselRef.current, {
-        interval: false,
-        ride: false,
-        wrap: true
-      });
+  const carouselVariants = {
+    initial: (direction) => ({
+      opacity: 0,
+      x: direction > 0 ? "15%" : "-15%"
+    }),
+    animate: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.3,
+        ease: easings.easeInQuad
+      }
+    },
+    exit: (direction) => ({
+      opacity: 0,
+      x: direction > 0 ? "-15%" : "15%",
+      transition: {
+        duration: 0.3,
+        ease: easings.easeOutQuad
+      }
+    })
+  };
 
-      return () => {
-        carouselInstance.dispose();
-      };
+  const fadeSlideRightTransition = {
+    initial: {
+      opacity: 0,
+      x: -50
+    },
+    animate: {
+      opacity: 1,
+      x: 0
+    },
+    exit: {
+      opacity: 0,
+      x: -50
+    },
+    transition: {
+      duration: 1,
+      ease: easings.easeInOutQuad
     }
-  }, [images]);
+  };
 
   return (
     <div className="col-12 col-lg-6">
-      <div
-        ref={carouselRef}
-        id="productCarousel"
-        className="carousel slide carousel-dark bg-light rounded-5"
-        data-bs-ride="carousel"
+      <motion.div
+        {...fadeSlideRightTransition}
+        className="product-carousel-container position-relative overflow-hidden rounded-5 bg-light w-100"
       >
+        <AnimatePresence mode="wait" custom={direction} initial="false">
+          <motion.img
+            key={currentIndex}
+            src={images[currentIndex]}
+            custom={direction}
+            variants={carouselVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="product-carousel-img w-100 h-100 object-fit-contain"
+          />
+        </AnimatePresence>
+
         {images.length > 1 && (
-          <div className="carousel-indicators">
-            {images.map((_, i) => (
-              <button
-                style={{ height: 8, width: 8 }}
-                key={i}
-                type="button"
-                data-bs-target="#productCarousel"
-                data-bs-slide-to={i}
-                className={`rounded-circle bg-secondary ${i === 0 ? "active" : ""}`}
-                aria-current={i === 0 ? "true" : undefined}
-                aria-label={`Slide ${i + 1}`}
-              />
-            ))}
+          <div className="d-flex justify-content-between position-absolute top-50 translate-middle-y start-0 end-0 px-3">
+            <motion.button
+              className="product-carousel-prev-btn btn bg-transparent border-0 text-body-tertiary"
+              onClick={() => paginateImage(-1)}
+              whileHover={{
+                opacity: 1,
+                transition: {
+                  duration: 0.2,
+                  ease: easings.easeInOutSine
+                }
+              }}
+              style={{ opacity: 0.5 }}
+            >
+              <i className="bi bi-arrow-left-circle-fill fs-4" />
+            </motion.button>
+            <motion.button
+              className="product-carousel-next-btn btn bg-transparent border-0 text-body-tertiary"
+              onClick={() => paginateImage(1)}
+              whileHover={{
+                opacity: 1,
+                transition: {
+                  duration: 0.2,
+                  ease: easings.easeInOutSine
+                }
+              }}
+              style={{ opacity: 0.5 }}
+            >
+              <i className="bi bi-arrow-right-circle-fill fs-4" />
+            </motion.button>
           </div>
         )}
-        <div className="carousel-inner">
-          {images.map((img, i) => (
-            <div
-              key={i}
-              className={`carousel-item ${i === 0 ? "active" : ""}`}
-            >
-              <img
-                src={img}
-                className="d-block w-100 object-fit-contain p-5"
-                style={{ maxHeight: 460 }}
-                alt={`Product Image ${i + 1}`}
-              />
-            </div>
-          ))}
-        </div>
-        {images.length > 1 && (
-          <>
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#productCarousel"
-              data-bs-slide="prev"
-            >
-              <i className="bi bi-arrow-left-circle-fill fs-4 text-secondary" aria-hidden="true"></i>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#productCarousel"
-              data-bs-slide="next"
-            >
-              <i className="bi bi-arrow-right-circle-fill fs-4 text-secondary" aria-hidden="true"></i>
-              <span className="visually-hidden">Next</span>
-            </button>
-          </>
-        )}
-      </div>
+      </motion.div>
     </div>
   );
 };

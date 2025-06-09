@@ -1,8 +1,9 @@
 import { motion } from "motion/react";
+import { easings } from "./easings";
 import "@/styles/PageTransitionAnimation.styles.css";
 
 const PageTransitionAnimation = ({ children }) => {
-  const slideInTransition = {
+  const slideInTopTransition = {
     initial: {
       scaleY: 0
     },
@@ -14,11 +15,11 @@ const PageTransitionAnimation = ({ children }) => {
     },
     transition: {
       duration: 1,
-      ease: [0.87, 0, 0.13, 1]
+      ease: easings.easeInOutQuad
     }
   };
 
-  const slideOutTransition = {
+  const slideOutBottomTransition = {
     initial: {
       scaleY: 1
     },
@@ -30,48 +31,45 @@ const PageTransitionAnimation = ({ children }) => {
     },
     transition: {
       duration: 1,
-      ease: [0.87, 0, 0.13, 1]
+      ease: easings.easeInOutQuad
     }
   };
 
-  const perspectiveTransition = {
+  const overlayTransition = {
     initial: {
-      y: 0,
-      scale: 1,
-      opacity: 1
+      opacity: 0.2
     },
     animate: {
-      y: 0,
-      scale: 1,
-      opacity: 1
-    },
-    exit: {
-      y: -100,
-      scale: 0.9,
       opacity: 0
     },
-    transition: {
-      duration: 1.2,
-      ease: [0.87, 0, 0.13, 1]
+    exit: {
+      opacity: 0.2,
+      zIndex: 1021,
+      transition: {
+        duration: 1,
+        ease: easings.easeOutQuad
+      }
     }
   };
 
   return (
     <>
       <motion.div
-        {...perspectiveTransition}
-      >
+        style={{ position: "fixed", top: 0, left: 0, height: "100vh", width: "100%", backgroundColor: "#000" }}
+        {...overlayTransition}
+      />
+      <div style={{ zIndex: 1 }}>
         {children}
-      </motion.div>
+      </div>
       <motion.div
         className="slide-in bg-light"
         key="slide-in"
-        {...slideInTransition}
+        {...slideInTopTransition}
       />
       <motion.div
         className="slide-out bg-light"
         key="slide-out"
-        {...slideOutTransition}
+        {...slideOutBottomTransition}
       />
     </>
   );

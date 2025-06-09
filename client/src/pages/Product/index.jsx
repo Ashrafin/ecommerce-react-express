@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { motion } from "motion/react";
+import { easings } from "@/animations/easings";
 import useProduct from "@/hooks/useProduct";
 import useRecommendedProducts from "@/hooks/useRecommendedProducts";
 import Container from "@/components/ui/Container";
@@ -25,6 +26,50 @@ const ProductPage = () => {
     error: similarProductsError
   } = useRecommendedProducts(product?.category, product?.id);
 
+  const fadeInOutTransition = {
+    initial: {
+      opacity: 0
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: 1,
+        delay: 0.6,
+        ease: easings.easeInQuad
+      }
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 0.6,
+        ease: easings.easeOutQuad
+      }
+    }
+  };
+
+  const fadeSlideUpTransition = {
+    initial: {
+      opacity: 0,
+      y: 50
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: easings.easeInQuad
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: 50,
+      transition: {
+        duration: 0.8,
+        ease: easings.easeOutQuad
+      }
+    }
+  };
+
   const _renderBreadcrumb = () => {
     return (
       <RenderWithFallback
@@ -32,12 +77,16 @@ const ProductPage = () => {
         hasError={productDetailsHasError || !product?.title}
         fallback={<Placeholder type="breadcrumb" />}
       >
-        <Breadcrumb
-          items={[
-            { label: "Home", to: "/" },
-            { label: product?.title }
-          ]}
-        />
+        <motion.div
+          {...fadeInOutTransition}
+        >
+          <Breadcrumb
+            items={[
+              { label: "Home", to: "/" },
+              { label: product?.title }
+            ]}
+          />
+        </motion.div>
       </RenderWithFallback>
     );
   };
@@ -73,21 +122,18 @@ const ProductPage = () => {
         hasError={similarProductsHasError || !similarProducts?.length}
         fallback={<Placeholder type="recommended products" />}
       >
-        <div className="d-flex flex-column my-5">
+        <motion.div
+          {...fadeSlideUpTransition}
+          className="d-flex flex-column my-5"
+        >
           <h4 className="fs-4 fw-bold urbanist text-body-emphasis mb-4">Recommended</h4>
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <RecommendedProducts products={similarProducts} />
           </div>
-        </div>
+        </motion.div>
       </RenderWithFallback>
     );
   };
-  
-  // remember to remove this
-  // useEffect(() => {
-  //   console.log("details loading: ", productDetailsLoading);
-  //   console.log("similar products: ", similarProducts);
-  // }, [product, similarProducts]);
 
   return (
     <>

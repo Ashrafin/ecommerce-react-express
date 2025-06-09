@@ -4,23 +4,20 @@ const FadeInOut = ({
   identifier: key,
   children,
   duration = 0.35,
-  delay = 0.1,
-  ease = [0.37, 0, 0.63, 1],
+  delay = 0,
+  ease = "linear",
   customStyles = "",
   customClasses = ""
 }) => {
   const fadeInOut = {
     initial: {
-      opacity: 0,
-      y: -20
+      opacity: 0
     },
     animate: {
-      opacity: 1,
-      y: 0
+      opacity: 1
     },
     exit: {
-      opacity: 0,
-      y: -20
+      opacity: 0
     },
     transition: {
       duration: duration,

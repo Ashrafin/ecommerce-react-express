@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const Breadcrumb = ({ items }) => {
   return (
-    <nav aria-label="breadcrumb" className="mb-5">
-      <ol className="breadcrumb">
+    <nav aria-label="breadcrumb" className="my-3">
+      <ol className="breadcrumb mb-0">
         {items.map((item, i) => (
           <li
             key={i}

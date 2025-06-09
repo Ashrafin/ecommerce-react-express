@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { easings } from "@/animations/easings";
 import withSessionManagement from "@/hoc/withSessionManagement";
 import HomePage from "@/pages/Home";
 import ProfilePage from "@/pages/Profile";
@@ -21,10 +22,9 @@ const AnimatedRoutes = () => {
         <FadeInOut
           key={location.pathname}
           identifier="navbar"
-          duration={0.65}
-          delay={0.45}
+          duration={1}
+          ease={easings.easeInOutQuad}
           customClasses="sticky-top"
-          customStyles={{ transformOrigin: "top" }}
         >
           <Navbar
             isAuthenticated={isAuthenticated}
