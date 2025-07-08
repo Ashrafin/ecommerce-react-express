@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import CartItemCount from "@/components/ui/CartItemCount";
 
-const Navbar = ({ isAuthenticated, loginWithRedirect, logout }) => {
+const Navbar = ({ isAuthenticated, loginWithRedirect, logout, handleOpenSearch }) => {
   const location = useLocation();
   const currentTheme = document.body.getAttribute("data-bs-theme");
 
@@ -21,7 +21,7 @@ const Navbar = ({ isAuthenticated, loginWithRedirect, logout }) => {
               <button className="nav-link text-info-emphasis dropdown-toggle fs-6 fw-medium" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Account
               </button>
-              <ul className="dropdown-menu">
+              <ul className="dropdown-menu border border-1 border-light-subtle shadow-sm">
                 {isAuthenticated && (
                   <>
                     <li>
@@ -44,6 +44,9 @@ const Navbar = ({ isAuthenticated, loginWithRedirect, logout }) => {
               </ul>
             </li>
           </ul>
+          <button onClick={handleOpenSearch} className="btn p-0 bg-transparent border-0">
+            <i className="bi bi-search fs-5" />
+          </button>
           <CartItemCount />
         </div>
       </div>

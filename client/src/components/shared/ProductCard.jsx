@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
   const _renderCategory = () => {
     if (!product.category) return <></>;
 
-    return <span className="badge rounded-pill bg-light text-body-emphasis text-capitalize inter fw-normal mb-3 me-2 border border-light-subtle">{product.category}</span>;
+    return <span className="badge rounded-pill bg-light text-body-emphasis text-capitalize inter fw-normal mb-2 me-2 border border-light-subtle">{product.category}</span>;
   };
 
   const _renderTags = () => {
@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
 
     return (
       <>
-        {filteredTags.map((tag) => <span key={tag} className="badge rounded-pill bg-light text-body-emphasis text-capitalize inter fw-normal mb-3 me-2 border border-light-subtle">{tag}</span>)}
+        {filteredTags.map((tag) => <span key={tag} className="badge rounded-pill bg-light text-body-emphasis text-capitalize inter fw-normal mb-2 me-2 border border-light-subtle">{tag}</span>)}
       </>
     );
   };
@@ -59,31 +59,35 @@ const ProductCard = ({ product }) => {
           className="card-img-top object-fit-contain bg-light"
           alt={product.title}
         />
-        <div className="card-body border-top border-1 border-light-subtle bg-white">
-          {_renderCategory()}
-          {_renderTags()}
-          <h5 className="card-title text-body-emphasis text-truncate urbanist fs-5 fw-bold mb-2">{product.title}</h5>
-          <h6 className="card-subtitle text-body-secondary text-truncate inter fs-7 fw-normal mb-0">{product.description}</h6>
-          <StarRatings rating={product.rating} reviewCount={product.reviews.length} starSize="sm" />
-          <div className="d-flex mt-2 mb-2">
-            {_renderPriceWithDiscount()}
-            {_renderOriginalPrice()}
+        <div className="d-flex flex-column card-body justify-content-between border-top border-1 border-light-subtle bg-white">
+          <div className="d-flex flex-wrap mb-2">
+            {_renderCategory()}
+            {_renderTags()}
           </div>
-          <div className="d-flex justify-content-between">
-            <button
-              type="button"
-              className="btn btn-sm bg-info-subtle text-info-emphasis border-0 rounded-pill inter fw-medium flex-grow-1 me-1"
-              onClick={() => goToProductPage(product.id)}
-            >
-              View Details
-            </button>
-            <button
-              type="button"
-              className="btn btn-sm bg-info-subtle border-0 px-3 rounded-pill ms-1"
-              onClick={() => console.log(`adding product with id ${product.id} to the cart`)}
-            >
-              <i className="bi bi-bag-fill text-info-emphasis fs-6"></i>
-            </button>
+          <div className="d-flex flex-column">
+            <h5 className="card-title text-body-emphasis text-truncate urbanist fs-5 fw-bold mb-2">{product.title}</h5>
+            <h6 className="card-subtitle text-body-secondary text-truncate inter fs-7 fw-normal mb-0">{product.description}</h6>
+            <StarRatings rating={product.rating} reviewCount={product.reviews.length} starSize="sm" />
+            <div className="d-flex mt-2 mb-2">
+              {_renderPriceWithDiscount()}
+              {_renderOriginalPrice()}
+            </div>
+            <div className="d-flex justify-content-between">
+              <button
+                type="button"
+                className="btn btn-sm bg-info-subtle text-info-emphasis border-0 rounded-pill inter fw-medium flex-grow-1 me-1"
+                onClick={() => goToProductPage(product.id)}
+              >
+                View Details
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm bg-info-subtle border-0 px-3 rounded-pill ms-1"
+                onClick={() => console.log(`adding product with id ${product.id} to the cart`)}
+              >
+                <i className="bi bi-bag-fill text-info-emphasis fs-6"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>

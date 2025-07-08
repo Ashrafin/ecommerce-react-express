@@ -27,3 +27,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.input-placeholder-text::placeholder {
+  color: rgba(33, 37, 41, 0.5);
+}
