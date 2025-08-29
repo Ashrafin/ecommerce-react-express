@@ -1,0 +1,22 @@
+.pagination-control-btn {
+  transition-property: background-color; 
+}
+
+.pagination-control-btn:hover {
+  background: rgba(248,249,250) !important;
+}
+
+.pagination-page-btn {
+  transition-property: background-color color;
+}
+
+.pagination-page-btn:hover {
+  background-color: #cff4fc !important;
+  color: #055160 !important;
+}
+
+.pagination-control-btn,
+.pagination-page-btn {
+  transition-duration: 0.25s;
+  transition-timing-function: linear;
+}

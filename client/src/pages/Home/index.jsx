@@ -1,16 +1,17 @@
-import { useState } from "react";
 import { motion } from "motion/react";
 import useProducts from "@/hooks/useProducts";
 import Container from "@/components/ui/Container";
 import Placeholder from "@/components/ui/Placeholder";
 import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCard from "@/components/shared/ProductCard";
+import Pagination from "@/components/shared/Pagination";
 import { easings } from "@/animations/easings";
+import usePaginationParams from "@/hooks/usePaginationParams";
 
 const HomePage = () => {
-  const [limit, setLimit] = useState(20);
-  const [skip, setSkip] = useState(0);
-  const { products, isLoading, hasError, error } = useProducts(limit, skip);
+  const { page, limit, skip, setPage } = usePaginationParams();
+  const { products, total, isLoading, hasError, error } = useProducts(limit, skip);
+
   const fadeSlideUpTransition = {
     initial: {
       opacity: 0,
@@ -58,6 +59,12 @@ const HomePage = () => {
           {...fadeSlideUpTransition}
         >
           {_renderProducts()}
+          <Pagination
+            currentPage={page}
+            totalItems={total}
+            itemsPerPage={limit}
+            handlePageChange={setPage}
+          />
         </motion.div>
       </Container>
     </>
