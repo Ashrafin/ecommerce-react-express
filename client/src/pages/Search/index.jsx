@@ -2,18 +2,19 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import useSearch from "@/hooks/useSearch";
+import usePaginationParams from "@/hooks/usePaginationParams";
 import Container from "@/components/ui/Container";
 import Placeholder from "@/components/ui/Placeholder";
 import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCard from "@/components/shared/ProductCard";
+import Pagination from "@/components/shared/Pagination";
 import { easings } from "@/animations/easings";
 
 const SearchPage = () => {
   const { search } = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
-  const [limit, setLimit] = useState(20);
-  const [skip, setSkip] = useState(0);
-  const { products, isLoading, hasError, error } = useSearch(searchQuery, limit, skip);
+  const { page, limit, skip, setPage } = usePaginationParams();
+  const { products, total, isLoading, hasError, error } = useSearch(searchQuery, limit, skip);
   const fadeSlideUpTransition = {
     initial: {
       opacity: 0,
@@ -82,13 +83,19 @@ const SearchPage = () => {
                 className="fw-semibold fs-4 urbanist text-body-emphasis mb-4"
                 {...fadeSlideUpTransition}
               >
-                Search results for: {searchQuery} <span className="fs-5 text-body-tertiary">({products.length})</span>
+                Search results for: {searchQuery} <span className="fs-5 text-body-tertiary">({total})</span>
               </motion.h3>
               <motion.div
                 className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"
                 {...fadeSlideUpTransition}
               >
                 {_renderProducts()}
+                <Pagination
+                  currentPage={page}
+                  totalItems={total}
+                  itemsPerPage={limit}
+                  handlePageChange={setPage}
+                />
               </motion.div>
             </>
           )}

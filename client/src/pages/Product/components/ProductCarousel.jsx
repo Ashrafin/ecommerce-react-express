@@ -35,31 +35,9 @@ const ProductCarousel = ({ images }) => {
     })
   };
 
-  const fadeSlideRightTransition = {
-    initial: {
-      opacity: 0,
-      x: -50
-    },
-    animate: {
-      opacity: 1,
-      x: 0
-    },
-    exit: {
-      opacity: 0,
-      x: -50
-    },
-    transition: {
-      duration: 1,
-      ease: easings.easeInOutQuad
-    }
-  };
-
   return (
     <div className="col-12 col-lg-6">
-      <motion.div
-        {...fadeSlideRightTransition}
-        className="product-carousel-container position-relative overflow-hidden rounded-5 bg-light w-100"
-      >
+      <div className="product-carousel-container position-relative overflow-hidden rounded-5 bg-light w-100">
         <AnimatePresence mode="wait" custom={direction} initial="false">
           <motion.img
             key={currentIndex}
@@ -105,7 +83,7 @@ const ProductCarousel = ({ images }) => {
             </motion.button>
           </div>
         )}
-      </motion.div>
+      </div>
     </div>
   );
 };

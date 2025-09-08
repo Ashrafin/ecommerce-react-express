@@ -33,7 +33,7 @@ const ProductCardPlaceholder = () => {
 
 const BreadcrumbPlaceholder = () => {
   return (
-    <p className="breadcrumb-placeholder placeholder-wave d-flex mb-5">
+    <p className="breadcrumb-placeholder placeholder-wave d-flex my-3">
       <span className="placeholder col-4 col-lg-1 rounded-4 bg-secondary opacity-25 me-1"></span>
       <span className="placeholder col-4 col-lg-2 rounded-4 bg-secondary opacity-50"></span>
     </p>

@@ -6,6 +6,7 @@ const useSearch = (query, limit = 10, skip = 0) => {
 
   return {
     products: data?.products ?? [],
+    total: data?.total,
     isLoading,
     hasError,
     error

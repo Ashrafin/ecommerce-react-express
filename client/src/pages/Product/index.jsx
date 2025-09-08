@@ -1,6 +1,5 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "motion/react";
-import { easings } from "@/animations/easings";
 import useProduct from "@/hooks/useProduct";
 import useRecommendedProducts from "@/hooks/useRecommendedProducts";
 import Container from "@/components/ui/Container";
@@ -10,6 +9,7 @@ import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCarousel from "./components/ProductCarousel";
 import ProductInformation from "./components/ProductInformation";
 import RecommendedProducts from "./components/RecommendedProducts";
+import { fadeSlideUpProduct } from "@/animations/transitions/product";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -25,49 +25,10 @@ const ProductPage = () => {
     hasError: similarProductsHasError,
     error: similarProductsError
   } = useRecommendedProducts(product?.category, product?.id);
+  const navigate = useNavigate();
 
-  const fadeInOutTransition = {
-    initial: {
-      opacity: 0
-    },
-    animate: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-        delay: 0.6,
-        ease: easings.easeInQuad
-      }
-    },
-    exit: {
-      opacity: 0,
-      transition: {
-        duration: 0.6,
-        ease: easings.easeOutQuad
-      }
-    }
-  };
-
-  const fadeSlideUpTransition = {
-    initial: {
-      opacity: 0,
-      y: 50
-    },
-    animate: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: easings.easeInQuad
-      }
-    },
-    exit: {
-      opacity: 0,
-      y: 50,
-      transition: {
-        duration: 0.8,
-        ease: easings.easeOutQuad
-      }
-    }
+  const handleBack = () => {
+    navigate(-1);
   };
 
   const _renderBreadcrumb = () => {
@@ -76,17 +37,14 @@ const ProductPage = () => {
         isLoading={productDetailsLoading}
         hasError={productDetailsHasError || !product?.title}
         fallback={<Placeholder type="breadcrumb" />}
+        delay={1000}
       >
-        <motion.div
-          {...fadeInOutTransition}
-        >
-          <Breadcrumb
-            items={[
-              { label: "Home", to: "/" },
-              { label: product?.title }
-            ]}
-          />
-        </motion.div>
+        <Breadcrumb
+          items={[
+            { label: "Back", onClick: handleBack },
+            { label: product?.title }
+          ]}
+        />
       </RenderWithFallback>
     );
   };
@@ -97,6 +55,7 @@ const ProductPage = () => {
         isLoading={productDetailsLoading}
         hasError={productDetailsHasError || !product?.images?.length}
         fallback={<Placeholder type="carousel" />}
+        delay={1000}
       >
         <ProductCarousel images={product?.images} />
       </RenderWithFallback>
@@ -109,6 +68,7 @@ const ProductPage = () => {
         isLoading={productDetailsLoading}
         hasError={productDetailsHasError || !product}
         fallback={<Placeholder type="product details" />}
+        delay={1000}
       >
         <ProductInformation product={product} />
       </RenderWithFallback>
@@ -121,16 +81,14 @@ const ProductPage = () => {
         isLoading={similarProductsLoading}
         hasError={similarProductsHasError || !similarProducts?.length}
         fallback={<Placeholder type="recommended products" />}
+        delay={1000}
       >
-        <motion.div
-          {...fadeSlideUpTransition}
-          className="d-flex flex-column my-5"
-        >
+        <div className="d-flex flex-column my-5">
           <h4 className="fs-4 fw-bold urbanist text-body-emphasis mb-4">Recommended</h4>
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <RecommendedProducts products={similarProducts} />
           </div>
-        </motion.div>
+        </div>
       </RenderWithFallback>
     );
   };
@@ -138,12 +96,14 @@ const ProductPage = () => {
   return (
     <>
       <Container utilityClasses="py-4 px-3 px-md-4">
-        {_renderBreadcrumb()}
-        <div className="row">
-          {_renderCarousel()}
-          {_renderProductDetails()}
-        </div>
-        {_renderRecommendedProducts()}
+        <motion.div {...fadeSlideUpProduct}>
+          {_renderBreadcrumb()}
+          <div className="row">
+            {_renderCarousel()}
+            {_renderProductDetails()}
+          </div>
+          {_renderRecommendedProducts()}
+        </motion.div>
       </Container>
     </>
   );

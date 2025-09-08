@@ -6,6 +6,9 @@ import AnimatedRoutes from "./router/AnimatedRoutes";
 const App = () => {
   useEffect(() => {
     document.body.setAttribute("data-bs-theme", "light");
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
   }, []);
 
   return (

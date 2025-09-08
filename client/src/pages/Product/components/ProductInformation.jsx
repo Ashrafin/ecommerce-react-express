@@ -1,5 +1,3 @@
-import { motion } from "motion/react";
-import { easings } from "@/animations/easings";
 import StarRatings from "@/components/ui/StarRatings";
 import ProductTabs from "./ProductTabs";
 
@@ -10,30 +8,8 @@ const ProductInformation = ({ product }) => {
   const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
   const discountPercentage = Math.floor(product.discountPercentage);
 
-  const fadeSlideLeftTransition = {
-    initial: {
-      opacity: 0,
-      x: 50
-    },
-    animate: {
-      opacity: 1,
-      x: 0
-    },
-    exit: {
-      opacity: 0,
-      x: 50
-    },
-    transition: {
-      duration: 1,
-      ease: easings.easeInOutQuad
-    }
-  };
-
   return (
-    <motion.div
-      className="col-12 col-lg-6 col-lg-5 pt-4 ps-lg-5 pt-lg-0"
-      {...fadeSlideLeftTransition}
-    >
+    <div className="col-12 col-lg-6 col-lg-5 pt-4 ps-lg-5 pt-lg-0">
       <p className="fs-5 fw-semibold text-body-emphasis urbanist mb-2">
         {product.brand}
       </p>
@@ -90,7 +66,7 @@ const ProductInformation = ({ product }) => {
           reviews={product.reviews}
         />
       )}
-    </motion.div>
+    </div>
   );
 };
 
