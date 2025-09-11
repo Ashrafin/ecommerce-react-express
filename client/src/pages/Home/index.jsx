@@ -18,21 +18,15 @@ const HomePage = () => {
         isLoading={isLoading}
         hasError={hasError || !products}
         fallback={
-          <motion.div
-            className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"
-            {...fadeSlideUpHome}
-          >
+          <>
             {[...Array(limit)].map((_, i) => (
               <Placeholder key={i} type="product card" />
             ))}
-          </motion.div>
+          </>
         }
         delay={1000}
       >
-        <motion.div
-          className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"
-          {...fadeSlideUpHome}
-        >
+        <>
           {products?.map((product) => <ProductCard key={product.id} product={product} />)}
           <Pagination
             currentPage={page}
@@ -40,7 +34,7 @@ const HomePage = () => {
             itemsPerPage={limit}
             handlePageChange={setPage}
           />
-        </motion.div>
+        </>
       </RenderWithFallback>
     );
   };
@@ -48,7 +42,12 @@ const HomePage = () => {
   return (
     <>
       <Container utilityClasses="py-5 px-3 px-md-4">
-        {_renderProducts()}
+        <motion.div
+          className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"
+          {...fadeSlideUpHome}
+        >
+          {_renderProducts()}
+        </motion.div>
       </Container>
     </>
   );
