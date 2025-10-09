@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import useSearch from "@/hooks/useSearch";
 import usePaginationParams from "@/hooks/usePaginationParams";
+import useFilterParams from "@/hooks/useFilterParams";
 import Container from "@/components/ui/Container";
 import Placeholder from "@/components/ui/Placeholder";
 import RenderWithFallback from "@/components/shared/RenderWithFallback";
@@ -13,8 +14,25 @@ import { fadeSlideUpSearch } from "@/animations/transitions/search";
 const SearchPage = () => {
   const { search } = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
-  const { page, limit, skip, setPage } = usePaginationParams();
-  const { products, total, isLoading, hasError, error } = useSearch(searchQuery, limit, skip);
+  const {
+    page,
+    limit,
+    skip,
+    setPage
+  } = usePaginationParams();
+  const { filters } = useFilterParams();
+  const {
+    products,
+    total,
+    isLoading,
+    hasError,
+    error
+  } = useSearch({
+    query: searchQuery,
+    ...filters,
+    limit,
+    skip
+  });
 
   const _renderHeader = () => {
     return (
