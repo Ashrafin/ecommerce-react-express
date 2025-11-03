@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import useSearch from "@/hooks/useSearch";
 import usePaginationParams from "@/hooks/usePaginationParams";
-import useFilterParams from "@/hooks/useFilterParams";
 import Container from "@/components/ui/Container";
 import Placeholder from "@/components/ui/Placeholder";
 import RenderWithFallback from "@/components/shared/RenderWithFallback";
@@ -20,7 +19,6 @@ const SearchPage = () => {
     skip,
     setPage
   } = usePaginationParams();
-  const { filters } = useFilterParams();
   const {
     products,
     total,
@@ -29,7 +27,7 @@ const SearchPage = () => {
     error
   } = useSearch({
     query: searchQuery,
-    ...filters,
+    // ...filters,
     limit,
     skip
   });

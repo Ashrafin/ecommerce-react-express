@@ -1,18 +1,18 @@
 const MIN_PRICE_OPTIONS = [0, 50, 100, 250, 500];
 const MAX_PRICE_OPTIONS = [100, 250, 500, 1000, 2000];
 
-const PriceFilters = ({ selectedFilters, setSelectedFilters }) => {
+const PriceFilters = ({ draftFilters, setDraftFilters }) => {
   const handleChangeMinPrice = (price) => {
-    setSelectedFilters((prev) => ({
+    setDraftFilters((prev) => ({
       ...prev,
-      minPrice: price
+      minPrice: Number(price)
     }));
   };
 
   const handleChangeMaxPrice = (price) => {
-    setSelectedFilters((prev) => ({
+    setDraftFilters((prev) => ({
       ...prev,
-      maxPrice: price
+      maxPrice: Number(price)
     }));
   };
 
@@ -26,7 +26,7 @@ const PriceFilters = ({ selectedFilters, setSelectedFilters }) => {
             className="form-check-input"
             type="radio"
             value={price}
-            checked={selectedFilters.minPrice === price}
+            checked={draftFilters.minPrice === price}
             onChange={() => handleChangeMinPrice(price)}
           />
           <label className="form-check-label fs-7" htmlFor={`min-${price}`}>
@@ -42,7 +42,7 @@ const PriceFilters = ({ selectedFilters, setSelectedFilters }) => {
             className="form-check-input"
             type="radio"
             value={price}
-            checked={selectedFilters.maxPrice === price}
+            checked={draftFilters.maxPrice === price}
             onChange={() => handleChangeMaxPrice(price)}
           />
           <label className="form-check-label fs-7" htmlFor={`max-${price}`}>

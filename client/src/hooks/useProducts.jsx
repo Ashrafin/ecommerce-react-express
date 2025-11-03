@@ -1,22 +1,81 @@
+import { useMemo } from "react";
 import useFetch from "./useFetch";
 
-const useProducts = ({ limit = 10, skip = 0, category, minPrice, maxPrice, sort }) => {
-  const params = new URLSearchParams();
-
-  params.set("limit", limit);
-  params.set("skip", skip);
-
-  if (category) params.set("category", category);
-  if (minPrice) params.set("minPrice", minPrice);
-  if (maxPrice) params.set("maxPrice", maxPrice);
-  if (sort) params.set("sort", sort);
-
-  const url = `https://dummyjson.com/products?${params.toString()}`;
+const useProducts = ({ limit = 20, skip = 0, filters = {}, sort }) => {
+  const url = `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
   const { data, isLoading, hasError, error } = useFetch(url);
 
+  const { products, total } = useMemo(() => {
+    if (!data?.products?.length) return { products: [], total: 0 };
+
+    let result = [...data.products];
+
+    if (filters.categories?.length) {
+      result = result.filter((product) => filters.categories.includes(product.category));
+    }
+
+    if (
+      filters.minPrice !== null && 
+      filters.minPrice !== undefined
+    ) {
+      result = result.filter((product) => product.price >= filters.minPrice);
+    }
+
+    if (
+      filters.maxPrice !== null && 
+      filters.maxPrice !== undefined
+    ) {
+      result = result.filter((product) => product.price <= filters.maxPrice);
+    }
+
+    if (
+      sort === "asc" || 
+      sort === null
+    ) {
+      result.sort((a, b) => a.price - b.price);
+    } else if (sort === "desc") {
+      result.sort((a, b) => b.price - a.price);
+    }
+
+    return { products: result, total: data?.total ?? 0 };
+  }, [
+    data,
+    filters,
+    sort,
+    limit,
+    skip
+  ]);
+
+  const filteredProducts = useMemo(() => {
+    if (!data?.products) return [];
+
+    return data.products.filter(product => {
+      const matchesCategory =
+        !filters.categories.length ||
+        filters.categories.includes(product.category);
+
+      const matchesMinPrice =
+        filters.minPrice === null || 
+        product.price >= filters.minPrice;
+
+      const matchesMaxPrice =
+        filters.maxPrice === null || 
+        product.price <= filters.maxPrice;
+
+      return matchesCategory && matchesMinPrice && matchesMaxPrice;
+    });
+  }, [data?.products, filters]);
+
+  const hasActiveFilters =
+    (filters.categories && filters.categories.length > 0) ||
+    filters.minPrice !== null ||
+    filters.maxPrice !== null;
+
   return {
-    products: data?.products ?? [],
-    total: data?.total,
+    products,
+    total,
+    filteredTotal: filteredProducts.length,
+    isFiltered: hasActiveFilters,
     isLoading,
     hasError,
     error

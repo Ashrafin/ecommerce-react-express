@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { motion } from "motion/react";
 import useProducts from "@/hooks/useProducts";
 import usePaginationParams from "@/hooks/usePaginationParams";
-import useFilterParams from "@/hooks/useFilterParams";
 import Container from "@/components/ui/Container";
 import Placeholder from "@/components/ui/Placeholder";
 import RenderWithFallback from "@/components/shared/RenderWithFallback";
@@ -16,25 +14,29 @@ const HomePage = () => {
     page,
     limit,
     skip,
-    setPage
+    sort,
+    setPage,
+    filters,
+    setAllFilters
   } = usePaginationParams();
-  const { filters } = useFilterParams();
   const {
     products,
     total,
+    filteredTotal,
+    isFiltered,
     isLoading,
     hasError,
     error
   } = useProducts({
-    ...filters,
     limit,
-    skip
+    skip,
+    filters,
+    sort
   });
-  const [selectedFilters, setSelectedFilters] = useState({
-    categories: [],
-    minPrice: null,
-    maxPrice: null
-  });
+
+  const handleApplyFilters = (newFilters) => {
+    setAllFilters(newFilters);
+  };
 
   const _renderProducts = () => {
     return (
@@ -54,7 +56,7 @@ const HomePage = () => {
           {products?.map((product) => <ProductCard key={product.id} product={product} />)}
           <Pagination
             currentPage={page}
-            totalItems={total}
+            totalItems={isFiltered ? filteredTotal : total}
             itemsPerPage={limit}
             handlePageChange={setPage}
           />
@@ -66,10 +68,7 @@ const HomePage = () => {
   return (
     <>
       <Container utilityClasses="py-5 px-3 px-md-4">
-        <Filters
-          selectedFilters={selectedFilters}
-          setSelectedFilters={setSelectedFilters}
-        />
+        <Filters onApply={handleApplyFilters} />
         <motion.div
           className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"
           {...fadeSlideUpHome}

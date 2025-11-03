@@ -1,10 +1,21 @@
-import { useEffect, useRef, useState } from "react";
-import Tooltip from "bootstrap/js/dist/tooltip";
-import Collapse from "bootstrap/js/dist/collapse";
+import {
+  useEffect,
+  useRef,
+  useState
+} from "react";
+import useFilters from "@/hooks/useFilters";
 import CategoryFilters from "./CategoryFilters";
 import PriceFilters from "./PriceFilters";
+import Tooltip from "bootstrap/js/dist/tooltip";
+import Collapse from "bootstrap/js/dist/collapse";
 
-const Filters = ({ selectedFilters, setSelectedFilters }) => {
+const Filters = ({ onApply }) => {
+  const {
+    draftFilters,
+    setDraftFilters,
+    applyFilters,
+    clearFilters
+  } = useFilters();
   const [isFilterOpened, setIsFilterOpened] = useState(false);
   const collapseRef = useRef(null);
 
@@ -25,33 +36,30 @@ const Filters = ({ selectedFilters, setSelectedFilters }) => {
   }, []);
 
   const handleResetFilters = () => {
-    setSelectedFilters({
-      categories: [],
-      minPrice: null,
-      maxPrice: null
-    });
+    clearFilters();
+    const bsCollapse = Collapse.getOrCreateInstance(collapseRef.current);
+    bsCollapse.hide();
+    setIsFilterOpened(false);
   };
 
   const handleCollapseToggle = () => {
     const bsCollapse = Collapse.getOrCreateInstance(collapseRef.current);
     bsCollapse.toggle();
-    setIsFilterOpened(!isFilterOpened);
+    setIsFilterOpened(prev => !prev);
   };
 
   const handleApplyFilters = () => {
-    console.log("apply selected filters: ", selectedFilters);
-    const collapseEl = document.getElementById("filtersCollapse");
-    const bsCollapse = Collapse.getOrCreateInstance(collapseEl);
+    applyFilters(onApply);
+    const bsCollapse = Collapse.getOrCreateInstance(collapseRef.current);
     bsCollapse.hide();
     setIsFilterOpened(false);
-    handleResetFilters();
   };
 
   const _renderApplyFiltersBtn = () => {
     if (
-      !selectedFilters.categories.length &&
-      selectedFilters.minPrice === null &&
-      selectedFilters.maxPrice === null
+      !draftFilters.categories.length &&
+      draftFilters.minPrice === null &&
+      draftFilters.maxPrice === null
     ) {
       return <></>;
     }
@@ -89,12 +97,12 @@ const Filters = ({ selectedFilters, setSelectedFilters }) => {
       <div className="col w-100 px-1">
         <div ref={collapseRef} className="collapse mb-3" id="filtersCollapse">
           <CategoryFilters
-            selectedFilters={selectedFilters}
-            setSelectedFilters={setSelectedFilters}
+            draftFilters={draftFilters}
+            setDraftFilters={setDraftFilters}
           />
           <PriceFilters
-            selectedFilters={selectedFilters}
-            setSelectedFilters={setSelectedFilters}
+            draftFilters={draftFilters}
+            setDraftFilters={setDraftFilters}
           />
           <div className="d-flex w-100 mt-3">
             <button

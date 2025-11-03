@@ -1,75 +1,98 @@
-import { useEffect } from "react";
+import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
-const usePaginationParams = (
-  defaults = {
-    page: 1,
-    limit: 20,
-    sort: "asc",
-    filters: {}
+const DEFAULTS = {
+  page: 1,
+  limit: 20,
+  sort: null,
+  filters: {
+    categories: [],
+    minPrice: null,
+    maxPrice: null
   }
-) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = parseInt(searchParams.get("page") || defaults.page, 10);
-  const limit = parseInt(searchParams.get("limit") || defaults.limit, 10);
-  const sort = searchParams.get("sort") || defaults.sort;
-  const skip = (page - 1) * limit;
-  const filters = {};
+};
 
-  searchParams.forEach((value, key) => {
-    if (!["page", "limit", "sort"].includes(key)) {
-      filters[key] = value;
-    }
-  });
+const usePaginationParams = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const params = useMemo(() => {
+    const page = Number(searchParams.get("page")) || DEFAULTS.page;
+    const limit = Number(searchParams.get("limit")) || DEFAULTS.limit;
+    const sort = searchParams.get("sort") || DEFAULTS.sort;
+    const filters = {
+      categories: searchParams.getAll("categories"),
+      minPrice: searchParams.get("minPrice") ? Number(searchParams.get("minPrice")) : null,
+      maxPrice: searchParams.get("maxPrice") ? Number(searchParams.get("maxPrice")) : null
+    };
+
+    return {
+      page,
+      limit,
+      sort,
+      filters
+    };
+  }, [searchParams]);
+
+  const skip = useMemo(() => (params.page - 1) * params.limit, [params.page, params.limit]);
 
   const setParams = (key, value) => {
     const newParams = new URLSearchParams(searchParams);
 
-    if (value == null || value === "") {
+    if (
+      value === null || 
+      value === undefined ||
+      value === "" || 
+      (Array.isArray(value) && value.length === 0)
+    ) {
       newParams.delete(key);
+    } else if (Array.isArray(value)) {
+      newParams.delete(key);
+      value.forEach((val) => newParams.append(key, val));
     } else {
       newParams.set(key, value);
     }
 
-    setSearchParams(newParams);
+    setSearchParams(newParams, { replace: true });
   };
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [page]);
-
-  useEffect(() => {
-    let updated = false;
+  const setAllFilters = (filterObj) => {
     const newParams = new URLSearchParams(searchParams);
 
-    if (!searchParams.get("page")) {
-      newParams.set("page", defaults.page);
-      updated = true;
-    }
+    Object.keys(filterObj).forEach(key => newParams.delete(key));
 
-    if (!searchParams.get("limit")) {
-      newParams.set("limit", defaults.limit);
-      updated = true;
-    }
+    Object.entries(filterObj).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((val) => {
+          if (
+            val !== null && 
+            val !== undefined && 
+            val !== ""
+          ) {
+            newParams.append(key, val);
+          }
+        });
+      } else if (
+        value !== null && 
+        value !== undefined && 
+        value !== ""
+      ) {
+        newParams.set(key, value);
+      }
+    });
 
-    if (!searchParams.get("sort")) {
-      newParams.set("sort", defaults.sort);
-      updated = true;
-    }
-
-    if (updated) setSearchParams(newParams);
-  }, [searchParams, setSearchParams, defaults]);
+    setSearchParams(newParams, { replace: true });
+  };
 
   return {
-    page,
-    limit,
+    page: params.page,
+    limit: params.limit,
     skip,
-    sort,
-    filters,
+    sort: params.sort,
+    filters: params.filters,
     setPage: (newPage) => setParams("page", newPage),
     setLimit: (newLimit) => setParams("limit", newLimit),
     setSort: (newSort) => setParams("sort", newSort),
-    setFilters: (key, value) => setParams(key, value)
+    setAllFilters
   };
 };
 

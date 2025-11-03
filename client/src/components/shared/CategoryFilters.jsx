@@ -1,6 +1,6 @@
 import useCategories from "@/hooks/useCategories";
 
-const CategoryFilters = ({ selectedFilters, setSelectedFilters }) => {
+const CategoryFilters = ({ draftFilters, setDraftFilters }) => {
   const {
     categories,
     categoriesIsLoading,
@@ -9,13 +9,13 @@ const CategoryFilters = ({ selectedFilters, setSelectedFilters }) => {
   } = useCategories();
 
   const handleChangeCategoryChecked = (categoryName) => {
-    const currentCategories = selectedFilters.categories || [];
+    const currentCategories = draftFilters.categories || [];
     const updatedCategories = currentCategories.includes(categoryName)
     ? currentCategories.filter(category => category !== categoryName)
     : [...currentCategories, categoryName];
 
-    setSelectedFilters({
-      ...selectedFilters,
+    setDraftFilters({
+      ...draftFilters,
       categories: updatedCategories
     });
   };
@@ -32,7 +32,7 @@ const CategoryFilters = ({ selectedFilters, setSelectedFilters }) => {
             className="form-check-input"
             type="checkbox"
             value={category.slug}
-            checked={selectedFilters.categories?.includes(category.slug)}
+            checked={draftFilters.categories?.includes(category.slug)}
             onChange={() => handleChangeCategoryChecked(category.slug)}
           />
           <label className="form-check-label fs-7" htmlFor={category.slug}>
