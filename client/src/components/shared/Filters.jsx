@@ -9,7 +9,7 @@ import PriceFilters from "./PriceFilters";
 import Tooltip from "bootstrap/js/dist/tooltip";
 import Collapse from "bootstrap/js/dist/collapse";
 
-const Filters = ({ onApply }) => {
+const Filters = ({ appliedFilters }) => {
   const {
     draftFilters,
     setDraftFilters,
@@ -18,6 +18,7 @@ const Filters = ({ onApply }) => {
   } = useFilters();
   const [isFilterOpened, setIsFilterOpened] = useState(false);
   const collapseRef = useRef(null);
+  const { categories, minPrice, maxPrice } = appliedFilters;
 
   useEffect(() => {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="filtersTooltip"]');
@@ -49,10 +50,42 @@ const Filters = ({ onApply }) => {
   };
 
   const handleApplyFilters = () => {
-    applyFilters(onApply);
+    applyFilters();
     const bsCollapse = Collapse.getOrCreateInstance(collapseRef.current);
     bsCollapse.hide();
     setIsFilterOpened(false);
+  };
+
+  const handleRemoveCategory = (categoryToRemove) => {
+    const modifiedCategories = draftFilters.categories.filter(category => category !== categoryToRemove);
+
+    const updated = {
+      ...draftFilters,
+      categories: modifiedCategories
+    };
+
+    setDraftFilters(updated);
+    applyFilters(updated);
+  };
+
+  const handleRemoveMinPrice = () => {
+    const updated = {
+      ...draftFilters,
+      minPrice: null
+    };
+
+    setDraftFilters(updated);
+    applyFilters(updated);
+  };
+
+  const handleRemoveMaxPrice = () => {
+    const updated = {
+      ...draftFilters,
+      maxPrice: null
+    };
+
+    setDraftFilters(updated);
+    applyFilters(updated);
   };
 
   const _renderApplyFiltersBtn = () => {
@@ -78,13 +111,63 @@ const Filters = ({ onApply }) => {
   return (
     <>
       <div className="d-flex mb-3">
+        <div className="me-auto">
+          {categories.length > 0 &&
+            categories.map((category) => (
+              <div
+                key={category}
+                className="d-inline-flex flex-row align-items-center badge rounded-pill bg-info-subtle py-1 ps-3 pe-2 me-2 mb-2"
+              >
+                <div className="d-flex flex-column justify-content-start align-items-start">
+                  <span className="fs-8 fw-medium urbanist text-capitalize text-info-emphasis mb-1">Category</span>
+                  <span className="fs-7 fw-medium inter text-capitalize text-info-emphasis">{category}</span>
+                </div>
+                <span
+                  className="bg-light rounded-circle p-1 ms-2 opacity-75 text-info-emphasis pointer"
+                  onClick={() => handleRemoveCategory(category)}
+                >
+                  <i className="bi bi-x fs-5" />
+                </span>
+              </div>
+            ))
+          }
+          {(minPrice !== null && minPrice !== undefined && minPrice !== "") && (
+            <div className="d-inline-flex flex-row align-items-center badge rounded-pill bg-info-subtle py-1 ps-3 pe-2 me-2 mb-2">
+              <div className="d-flex flex-column justify-content-start align-items-start">
+                <span className="fs-8 fw-medium urbanist text-capitalize text-info-emphasis mb-1">Min Price</span>
+                <span className="fs-7 fw-medium inter text-capitalize text-info-emphasis">${minPrice}</span>
+              </div>
+              <span
+                className="bg-light rounded-circle p-1 ms-2 opacity-75 text-info-emphasis pointer"
+                onClick={() => handleRemoveMinPrice()}
+              >
+                <i className="bi bi-x fs-5" />
+              </span>
+            </div>
+          )}
+          {(maxPrice !== null && maxPrice !== undefined && maxPrice !== "") && (
+            <div className="d-inline-flex flex-row align-items-center badge rounded-pill bg-info-subtle py-1 ps-3 pe-2 me-2 mb-2">
+              <div className="d-flex flex-column justify-content-start align-items-start">
+                <span className="fs-8 fw-medium urbanist text-capitalize text-info-emphasis mb-1">Max Price</span>
+                <span className="fs-7 fw-medium inter text-capitalize text-info-emphasis">${maxPrice}</span>
+              </div>
+              <span
+                className="bg-light rounded-circle p-1 ms-2 opacity-75 text-info-emphasis pointer"
+                onClick={() => handleRemoveMaxPrice()}
+              >
+                <i className="bi bi-x fs-5" />
+              </span>
+            </div>
+          )}
+        </div>
         <div
+          className="ms-auto"
           data-bs-toggle="filtersTooltip"
           data-bs-placement="right"
           data-bs-title="Filters"
         >
           <button
-            className={`btn btn-sm px-3 rounded-pill ms-1 btn-outline ${isFilterOpened ? "bg-info-subtle" : "border-light-subtle opacity-100 bg-light-subtle"}`}
+            className={`btn btn-sm px-3 rounded-pill btn-outline ${isFilterOpened ? "bg-info-subtle" : "border-light-subtle opacity-100 bg-light-subtle"}`}
             type="button"
             onClick={handleCollapseToggle}
             aria-expanded={isFilterOpened}

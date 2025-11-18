@@ -2,6 +2,10 @@
   font-size: 0.875rem !important;
 }
 
+.fs-8 {
+  font-size: 0.75rem !important;
+}
+
 .transition-all-linear {
   transition: all 0.2s linear;
 }
@@ -30,4 +34,8 @@
 
 .input-placeholder-text::placeholder {
   color: rgba(33, 37, 41, 0.5);
+}
+
+.pointer {
+  cursor: pointer;
 }

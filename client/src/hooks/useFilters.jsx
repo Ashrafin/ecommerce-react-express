@@ -14,12 +14,14 @@ const useFilters = () => {
   } = usePaginationParams();
   const [draftFilters, setDraftFilters] = useState(DEFAULT_FILTERS);
 
-  const applyFilters = () => {
+  const applyFilters = (override = null) => {
+    const activeFilters = override ?? draftFilters;
+
     setAllFilters({
       limit: urlFilters.limit,
       sort: urlFilters.sort,
       page: 1,
-      ...draftFilters
+      ...activeFilters
     });
   };
 
