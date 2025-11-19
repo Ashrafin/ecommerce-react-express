@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "motion/react";
-import useSearch from "@/hooks/useSearch";
 import usePaginationParams from "@/hooks/usePaginationParams";
+import useProducts from "@/hooks/useProducts";
 import Container from "@/components/ui/Container";
 import Placeholder from "@/components/ui/Placeholder";
 import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCard from "@/components/shared/ProductCard";
 import Pagination from "@/components/shared/Pagination";
+import Filters from "@/components/shared/Filters";
 import { fadeSlideUpSearch } from "@/animations/transitions/search";
 
 const SearchPage = () => {
@@ -17,20 +18,27 @@ const SearchPage = () => {
     page,
     limit,
     skip,
-    setPage
+    sort,
+    setPage,
+    filters
   } = usePaginationParams();
   const {
     products,
     total,
+    filteredTotal,
+    isFiltered,
     isLoading,
     hasError,
     error
-  } = useSearch({
-    query: searchQuery,
-    // ...filters,
+  } = useProducts({
     limit,
-    skip
+    skip,
+    filters,
+    sort,
+    query: searchQuery
   });
+
+  const categories = [...new Set(products.map(product => product.category))];
 
   const _renderHeader = () => {
     return (
@@ -64,29 +72,29 @@ const SearchPage = () => {
         delay={1000}
       >
         <>
-          {products?.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-          <Pagination
-            currentPage={page}
-            totalItems={total}
-            itemsPerPage={limit}
-            handlePageChange={setPage}
-          />
+          {products?.map((product) => <ProductCard key={product.id} product={product} />)}
+          {products.length > 0 && (
+            <Pagination
+              currentPage={page}
+              totalItems={isFiltered ? filteredTotal : total}
+              itemsPerPage={limit}
+              handlePageChange={setPage}
+            />
+          )}
         </>
       </RenderWithFallback>
     );
   };
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(search);
-    const q = queryParams.get("q");
+    const q = new URLSearchParams(search).get("q");
     setSearchQuery(q || "");
   }, [search]);
 
   return (
     <>
       <Container utilityClasses="py-5 px-3 px-md-4">
+        <Filters appliedFilters={filters} availableCategories={categories} />
         <motion.div className="w-100" {...fadeSlideUpSearch}>
           {_renderHeader()}
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">

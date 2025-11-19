@@ -1,8 +1,17 @@
 import { useMemo } from "react";
 import useFetch from "./useFetch";
 
-const useProducts = ({ limit = 20, skip = 0, filters = {}, sort }) => {
-  const url = `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
+const useProducts = ({
+  limit = 20,
+  skip = 0,
+  filters = {},
+  sort,
+  query = null
+}) => {
+  const baseUrl = query
+  ? `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&`
+  : `https://dummyjson.com/products?`;
+  const url = `${baseUrl}limit=${limit}&skip=${skip}`;
   const { data, isLoading, hasError, error } = useFetch(url);
 
   const { products, total } = useMemo(() => {
@@ -37,7 +46,10 @@ const useProducts = ({ limit = 20, skip = 0, filters = {}, sort }) => {
       result.sort((a, b) => b.price - a.price);
     }
 
-    return { products: result, total: data?.total ?? 0 };
+    return {
+      products: result,
+      total: data?.total ?? 0
+    };
   }, [
     data,
     filters,

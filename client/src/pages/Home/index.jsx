@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import useProducts from "@/hooks/useProducts";
 import usePaginationParams from "@/hooks/usePaginationParams";
@@ -10,6 +11,7 @@ import Filters from "@/components/shared/Filters";
 import { fadeSlideUpHome } from "@/animations/transitions/home";
 
 const HomePage = () => {
+  const [categories, setCategories] = useState([]);
   const {
     page,
     limit,
@@ -33,6 +35,16 @@ const HomePage = () => {
     sort
   });
 
+  useEffect(() => {
+    const fetchAllCategories = async () => {
+      const res = await fetch("https://dummyjson.com/products/category-list");
+      const data = await res.json();
+      setCategories(data);
+    };
+    
+    fetchAllCategories();
+  }, []);
+
   const _renderProducts = () => {
     return (
       <RenderWithFallback
@@ -40,9 +52,7 @@ const HomePage = () => {
         hasError={hasError || !products}
         fallback={
           <>
-            {[...Array(limit)].map((_, i) => (
-              <Placeholder key={i} type="product card" />
-            ))}
+            {[...Array(limit)].map((_, i) => <Placeholder key={i} type="product card" />)}
           </>
         }
         delay={1000}
@@ -65,7 +75,7 @@ const HomePage = () => {
   return (
     <>
       <Container utilityClasses="py-5 px-3 px-md-4">
-        <Filters appliedFilters={filters} />
+        <Filters appliedFilters={filters} availableCategories={categories} />
         {isFiltered && products.length < 1 && <h5 className="text-center urbanist fw-semibold">No Results Found</h5>}
         <motion.div
           className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"

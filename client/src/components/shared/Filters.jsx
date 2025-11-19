@@ -9,7 +9,10 @@ import PriceFilters from "./PriceFilters";
 import Tooltip from "bootstrap/js/dist/tooltip";
 import Collapse from "bootstrap/js/dist/collapse";
 
-const Filters = ({ appliedFilters }) => {
+const Filters = ({
+  appliedFilters,
+  availableCategories = []
+}) => {
   const {
     draftFilters,
     setDraftFilters,
@@ -182,6 +185,7 @@ const Filters = ({ appliedFilters }) => {
           <CategoryFilters
             draftFilters={draftFilters}
             setDraftFilters={setDraftFilters}
+            availableCategories={availableCategories}
           />
           <PriceFilters
             draftFilters={draftFilters}
