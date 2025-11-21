@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { useCartStore } from "@/store/useCartStore";
 import StarRatings from "@/components/ui/StarRatings";
 import "@/styles/ProductCard.styles.css";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
+  const addItemToCart = useCartStore(store => store.addItem);
 
   const _renderCategory = () => {
     if (!product.category) return <></>;
@@ -83,7 +85,7 @@ const ProductCard = ({ product }) => {
               <button
                 type="button"
                 className="btn btn-sm bg-info-subtle border-0 px-3 rounded-pill ms-1"
-                onClick={() => console.log(`adding product with id ${product.id} to the cart`)}
+                onClick={() => addItemToCart(product)}
               >
                 <i className="bi bi-bag-fill text-info-emphasis fs-6"></i>
               </button>

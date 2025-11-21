@@ -1,9 +1,11 @@
+import { useCartStore } from "@/store/useCartStore";
 import StarRatings from "@/components/ui/StarRatings";
 import ProductTabs from "./ProductTabs";
 
 const ProductInformation = ({ product }) => {
   if (!product) return <></>;
 
+  const addItemToCart = useCartStore(store => store.addItem);
   const filteredTags = product.tags.filter(tag => tag.toLowerCase() !== product.category.toLowerCase());
   const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
   const discountPercentage = Math.floor(product.discountPercentage);
@@ -49,7 +51,7 @@ const ProductInformation = ({ product }) => {
           )}
         </div>
         <button
-          onClick={() => console.log(`add product with id: ${product.id} to the cart`)}
+          onClick={() => addItemToCart(product)}
           type="button"
           className="btn bg-info-subtle text-info-emphasis border-0 rounded-pill urbanist fw-semibold px-4"
         >

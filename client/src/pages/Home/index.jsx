@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { useCartStore } from "@/store/useCartStore";
 import useProducts from "@/hooks/useProducts";
 import usePaginationParams from "@/hooks/usePaginationParams";
 import Container from "@/components/ui/Container";
@@ -34,6 +35,9 @@ const HomePage = () => {
     filters,
     sort
   });
+
+  // const cartItems = useCartStore(store => store.items);
+  // console.log("cart items: ", cartItems);
 
   useEffect(() => {
     const fetchAllCategories = async () => {

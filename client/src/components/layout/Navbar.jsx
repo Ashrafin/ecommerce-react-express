@@ -1,8 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
+import { useCartStore } from "@/store/useCartStore";
 import CartItemCount from "@/components/ui/CartItemCount";
 
 const Navbar = ({ isAuthenticated, loginWithRedirect, logout, handleOpenSearch }) => {
   const location = useLocation();
+  const totalItems = useCartStore(store => store.totalItems());
   const currentTheme = document.body.getAttribute("data-bs-theme");
 
   return (
@@ -47,7 +49,7 @@ const Navbar = ({ isAuthenticated, loginWithRedirect, logout, handleOpenSearch }
           <button onClick={handleOpenSearch} className="btn p-0 bg-transparent border-0">
             <i className="bi bi-search fs-5" />
           </button>
-          <CartItemCount />
+          <CartItemCount count={totalItems} />
         </div>
       </div>
     </nav>
