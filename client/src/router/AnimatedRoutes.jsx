@@ -13,6 +13,7 @@ import Navbar from "@/components/layout/Navbar";
 import SearchBar from "@/components/layout/SearchBar";
 import PageTransitionAnimation from "@/animations/PageTransitionAnimation";
 import FadeInOut from "@/animations/FadeInOut";
+import CartNotification from "@/components/shared/CartNotification";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -48,6 +49,9 @@ const AnimatedRoutes = () => {
           />
         </FadeInOut>
       </AnimatePresence>
+
+      <CartNotification />
+
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route

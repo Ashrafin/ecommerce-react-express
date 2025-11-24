@@ -58,7 +58,7 @@ const PageTransitionAnimation = ({ children }) => {
         style={{ position: "fixed", top: 0, left: 0, height: "100vh", width: "100%", backgroundColor: "#000" }}
         {...overlayTransition}
       />
-      <div style={{ zIndex: 1 }}>
+      <div className="z-1 position-relative">
         {children}
       </div>
       <motion.div

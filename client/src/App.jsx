@@ -14,7 +14,7 @@ const App = () => {
   return (
     <Container
       fluid
-      utilityClasses="w-100 vw-100 d-flex flex-column px-0"
+      utilityClasses="w-100 vw-100 d-flex flex-column px-0 position-relative"
     >
       <AnimatedRoutes />
       <CartCanvas />
