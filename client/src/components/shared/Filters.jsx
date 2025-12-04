@@ -21,7 +21,11 @@ const Filters = ({
   } = useFilters();
   const [isFilterOpened, setIsFilterOpened] = useState(false);
   const collapseRef = useRef(null);
-  const { categories, minPrice, maxPrice } = appliedFilters;
+  const {
+    categories,
+    minPrice,
+    maxPrice
+  } = appliedFilters;
 
   useEffect(() => {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="filtersTooltip"]');
@@ -122,8 +126,12 @@ const Filters = ({
                 className="d-inline-flex flex-row align-items-center badge rounded-pill bg-info-subtle py-1 ps-3 pe-2 me-2 mb-2"
               >
                 <div className="d-flex flex-column justify-content-start align-items-start">
-                  <span className="fs-8 fw-medium urbanist text-capitalize text-info-emphasis mb-1">Category</span>
-                  <span className="fs-7 fw-medium inter text-capitalize text-info-emphasis">{category}</span>
+                  <span className="fs-8 fw-medium urbanist text-capitalize text-info-emphasis mb-1">
+                    Category
+                  </span>
+                  <span className="fs-7 fw-medium inter text-capitalize text-info-emphasis">
+                    {category}
+                  </span>
                 </div>
                 <span
                   className="bg-light rounded-circle p-1 ms-2 opacity-75 text-info-emphasis pointer"
@@ -137,8 +145,12 @@ const Filters = ({
           {(minPrice !== null && minPrice !== undefined && minPrice !== "") && (
             <div className="d-inline-flex flex-row align-items-center badge rounded-pill bg-info-subtle py-1 ps-3 pe-2 me-2 mb-2">
               <div className="d-flex flex-column justify-content-start align-items-start">
-                <span className="fs-8 fw-medium urbanist text-capitalize text-info-emphasis mb-1">Min Price</span>
-                <span className="fs-7 fw-medium inter text-capitalize text-info-emphasis">${minPrice}</span>
+                <span className="fs-8 fw-medium urbanist text-capitalize text-info-emphasis mb-1">
+                  Min Price
+                </span>
+                <span className="fs-7 fw-medium inter text-capitalize text-info-emphasis">
+                  ${minPrice}
+                </span>
               </div>
               <span
                 className="bg-light rounded-circle p-1 ms-2 opacity-75 text-info-emphasis pointer"
@@ -151,8 +163,12 @@ const Filters = ({
           {(maxPrice !== null && maxPrice !== undefined && maxPrice !== "") && (
             <div className="d-inline-flex flex-row align-items-center badge rounded-pill bg-info-subtle py-1 ps-3 pe-2 me-2 mb-2">
               <div className="d-flex flex-column justify-content-start align-items-start">
-                <span className="fs-8 fw-medium urbanist text-capitalize text-info-emphasis mb-1">Max Price</span>
-                <span className="fs-7 fw-medium inter text-capitalize text-info-emphasis">${maxPrice}</span>
+                <span className="fs-8 fw-medium urbanist text-capitalize text-info-emphasis mb-1">
+                  Max Price
+                </span>
+                <span className="fs-7 fw-medium inter text-capitalize text-info-emphasis">
+                  ${maxPrice}
+                </span>
               </div>
               <span
                 className="bg-light rounded-circle p-1 ms-2 opacity-75 text-info-emphasis pointer"
@@ -181,7 +197,11 @@ const Filters = ({
         </div>
       </div>
       <div className="col w-100 px-1">
-        <div ref={collapseRef} className="collapse mb-3" id="filtersCollapse">
+        <div
+          ref={collapseRef}
+          className="collapse mb-3"
+          id="filtersCollapse"
+        >
           <CategoryFilters
             draftFilters={draftFilters}
             setDraftFilters={setDraftFilters}

@@ -13,19 +13,27 @@ const ReviewsTab = ({ reviews }) => {
                   style={{ height: 40, width: 40 }}
                   className="d-flex rounded-circle bg-body-tertiary justify-content-center align-items-center me-2"
                 >
-                  <i className="bi bi-person-fill text-secondary fs-3"></i>
+                  <i className="bi bi-person-fill text-secondary fs-3" />
                 </div>
                 <div className="flex-column">
-                  <p className="fs-7 fw-semibold urbanist text-body-emphasis mb-0">{review.reviewerName}</p>
-                  <p style={{ fontSize: "0.8rem" }} className="fw-medium urbanist text-body-tertiary mb-0">{formattedDate}</p>
+                  <p className="fs-7 fw-semibold urbanist text-body-emphasis mb-0">
+                    {review.reviewerName}
+                  </p>
+                  <p style={{ fontSize: "0.8rem" }} className="fw-medium urbanist text-body-tertiary mb-0">
+                    {formattedDate}
+                  </p>
                 </div>
               </div>
               <div className="d-flex flex-row align-items-center">
-                <i className="bi bi-star-fill text-warning fs-7"></i>
-                <p className="fs-7 fw-normal inter text-body-tertiary ms-1 mb-0">{review.rating.toFixed(1)}</p>
+                <i className="bi bi-star-fill text-warning fs-7" />
+                <p className="fs-7 fw-normal inter text-body-tertiary ms-1 mb-0">
+                  {review.rating.toFixed(1)}
+                </p>
               </div>
             </div>
-            <p className="fs-7 lh-1 fw-normal inter text-body-emphasis mb-0">{review.comment}</p>
+            <p className="fs-7 lh-1 fw-normal inter text-body-emphasis mb-0">
+              {review.comment}
+            </p>
           </div>
         );
       })}

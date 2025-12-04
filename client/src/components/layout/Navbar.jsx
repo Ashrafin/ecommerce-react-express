@@ -1,8 +1,17 @@
-import { Link, useLocation } from "react-router-dom";
+import {
+  Link,
+  useLocation
+} from "react-router-dom";
 import { useCartStore } from "@/store/useCartStore";
 import CartItemCount from "@/components/ui/CartItemCount";
 
-const Navbar = ({ isAuthenticated, loginWithRedirect, logout, handleOpenSearch }) => {
+const Navbar = ({
+  isAuthenticated,
+  loginWithRedirect,
+  logout,
+  handleOpenSearch,
+  handleOpenCart
+}) => {
   const location = useLocation();
   const totalItems = useCartStore(store => store.totalItems());
   const currentTheme = document.body.getAttribute("data-bs-theme");
@@ -13,24 +22,39 @@ const Navbar = ({ isAuthenticated, loginWithRedirect, logout, handleOpenSearch }
         <div className="d-flex flex-row">
           <ul className="navbar-nav">
             <li className="nav-item mx-2">
-              <Link className="nav-link text-info-emphasis fs-6 fw-medium" aria-current="page" to="/">Home</Link>
+              <Link className="nav-link text-info-emphasis fs-6 fw-medium" aria-current="page" to="/">
+                Home
+              </Link>
             </li>
           </ul>
         </div>
         <div className="d-flex flex-row align-items-center">
           <ul className="navbar-nav">
             <li className="nav-item dropdown">
-              <button className="nav-link text-info-emphasis dropdown-toggle fs-6 fw-medium" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button
+                className="nav-link text-info-emphasis dropdown-toggle fs-6 fw-medium"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 Account
               </button>
               <ul className="dropdown-menu border border-1 border-light-subtle shadow-sm">
                 {isAuthenticated && (
                   <>
                     <li>
-                      <Link className={`dropdown-item ${location.pathname === "/profile" ? "active" : ""} fs-6`} to="/profile">Profile</Link>
+                      <Link
+                        className={`dropdown-item ${location.pathname === "/profile" ? "active" : ""} fs-6`}
+                        to="/profile"
+                      >
+                        Profile
+                      </Link>
                     </li>
                     <li>
-                      <button className="dropdown-item fs-6" onClick={() => {logout({ returnTo: window.location.origin })}}>
+                      <button
+                        className="dropdown-item fs-6"
+                        onClick={() => { logout({ returnTo: window.location.origin }) }}
+                      >
                         Logout
                       </button>
                     </li>
@@ -38,7 +62,10 @@ const Navbar = ({ isAuthenticated, loginWithRedirect, logout, handleOpenSearch }
                 )}
                 {!isAuthenticated && (
                   <li>
-                    <button className="dropdown-item fs-6" onClick={() => loginWithRedirect()}>
+                    <button
+                      className="dropdown-item fs-6"
+                      onClick={() => loginWithRedirect()}
+                    >
                       Login
                     </button>
                   </li>
@@ -46,10 +73,16 @@ const Navbar = ({ isAuthenticated, loginWithRedirect, logout, handleOpenSearch }
               </ul>
             </li>
           </ul>
-          <button onClick={handleOpenSearch} className="btn p-0 bg-transparent border-0">
+          <button
+            className="btn p-0 bg-transparent border-0"
+            onClick={handleOpenSearch}
+          >
             <i className="bi bi-search fs-5" />
           </button>
-          <CartItemCount count={totalItems} />
+          <CartItemCount
+            count={totalItems}
+            handleOpenCart={handleOpenCart}
+          />
         </div>
       </div>
     </nav>

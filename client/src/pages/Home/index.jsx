@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { motion } from "motion/react";
-import { useCartStore } from "@/store/useCartStore";
+import {
+  useEffect,
+  useState
+} from "react";
 import useProducts from "@/hooks/useProducts";
 import usePaginationParams from "@/hooks/usePaginationParams";
 import Container from "@/components/ui/Container";
@@ -9,6 +10,7 @@ import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCard from "@/components/shared/ProductCard";
 import Pagination from "@/components/shared/Pagination";
 import Filters from "@/components/shared/Filters";
+import { motion } from "motion/react";
 import { fadeSlideUpHome } from "@/animations/transitions/home";
 
 const HomePage = () => {
@@ -36,16 +38,13 @@ const HomePage = () => {
     sort
   });
 
-  // const cartItems = useCartStore(store => store.items);
-  // console.log("cart items: ", cartItems);
-
   useEffect(() => {
     const fetchAllCategories = async () => {
       const res = await fetch("https://dummyjson.com/products/category-list");
       const data = await res.json();
       setCategories(data);
     };
-    
+
     fetchAllCategories();
   }, []);
 
@@ -79,7 +78,10 @@ const HomePage = () => {
   return (
     <>
       <Container utilityClasses="py-5 px-3 px-md-4">
-        <Filters appliedFilters={filters} availableCategories={categories} />
+        <Filters
+          appliedFilters={filters}
+          availableCategories={categories}
+        />
         {isFiltered && products.length < 1 && <h5 className="text-center urbanist fw-semibold">No Results Found</h5>}
         <motion.div
           className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"

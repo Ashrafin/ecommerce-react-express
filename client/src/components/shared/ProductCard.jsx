@@ -53,7 +53,9 @@ const ProductCard = ({ product }) => {
         {discountPercentage >= 1 && (
           <div className="d-flex flex-row discount-percentage rounded-5 bg-danger bg-opacity-25 py-1 px-2 position-absolute">
             <i className="bi bi-tag-fill text-danger fs-7 me-2"></i>
-            <p className="text-danger urbanist fw-bold fs-7 mb-0">-{discountPercentage}%</p>
+            <p className="text-danger urbanist fw-bold fs-7 mb-0">
+              -{discountPercentage}%
+            </p>
           </div>
         )}
         <img
@@ -67,8 +69,12 @@ const ProductCard = ({ product }) => {
             {_renderTags()}
           </div>
           <div className="d-flex flex-column">
-            <h5 className="card-title text-body-emphasis text-truncate urbanist fs-5 fw-bold mb-2">{product.title}</h5>
-            <h6 className="card-subtitle text-body-secondary text-truncate inter fs-7 fw-normal mb-0">{product.description}</h6>
+            <h5 className="card-title text-body-emphasis text-truncate urbanist fs-5 fw-bold mb-2">
+              {product.title}
+            </h5>
+            <h6 className="card-subtitle text-body-secondary text-truncate inter fs-7 fw-normal mb-0">
+              {product.description}
+            </h6>
             <StarRatings rating={product.rating} reviewCount={product.reviews.length} starSize="sm" />
             <div className="d-flex mt-2 mb-2">
               {_renderPriceWithDiscount()}
@@ -87,7 +93,7 @@ const ProductCard = ({ product }) => {
                 className="btn btn-sm bg-info-subtle border-0 px-3 rounded-pill ms-1"
                 onClick={() => addItemToCart(product)}
               >
-                <i className="bi bi-bag-fill text-info-emphasis fs-6"></i>
+                <i className="bi bi-bag-fill text-info-emphasis fs-6" />
               </button>
             </div>
           </div>

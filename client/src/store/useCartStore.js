@@ -4,12 +4,58 @@ export const useCartStore = create((set, get) => ({
   items: [],
   showNotification: false,
   notificationMessage: "",
+  notificationId: null,
+  notificationQueue: [],
+  timeoutId: null,
 
   triggerNotification: (message) => {
-    set({ showNotification: true, notificationMessage: message });
-    setTimeout(() => {
-      set({ showNotification: false });
-    }, 5000);
+    const { showNotification, notificationQueue } = get();
+    const id = Date.now() + Math.random();
+
+    if (showNotification) {
+      set({
+        notificationQueue: [...notificationQueue, { id, message }]
+      });
+    } else {
+      set({
+        showNotification: true,
+        notificationMessage: message,
+        notificationId: id
+      });
+      const timeoutId = setTimeout(() => {
+        get().hideNotification();
+      }, 5000);
+      set({ timeoutId });
+    }
+  },
+
+  hideNotification: () => {
+    const { timeoutId } = get();
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    set({
+      showNotification: false,
+      timeoutId: null
+    });
+  },
+
+  processQueue: () => {
+    const { notificationQueue } = get();
+
+    if (notificationQueue.length > 0) {
+      const [next, ...remainingQueue] = notificationQueue;
+      set({
+        notificationQueue: remainingQueue,
+        showNotification: true,
+        notificationMessage: next.message,
+        notificationId: next.id
+      });
+      const timeoutId = setTimeout(() => {
+        get().hideNotification();
+      }, 5000);
+      set({ timeoutId });
+    }
   },
 
   addItem: (product) => {
@@ -49,13 +95,24 @@ export const useCartStore = create((set, get) => ({
 
     const updated = items.map(item => item.id === id ? { ...item, quantity: newQuantity } : item);
     set({ items: updated });
-    triggerNotification(`${item.title} updated to ${newQuantity}`);
+    triggerNotification(`${item.title} updated to ${newQuantity} `);
   },
   totalItems: () => {
     return get().items.reduce((sum, item) => sum + item.quantity, 0);
   },
   totalPrice: () => {
-    return get().items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const { items } = get();
+
+    if (items.length > 0) {
+      return items.reduce((sum, item) => {
+        const hasDiscount = item.discountPercentage && item.discountPercentage > 0;
+        const finalPrice = hasDiscount
+          ? item.price * (1 - item.discountPercentage / 100)
+          : item.price;
+
+        return sum + finalPrice * item.quantity;
+      }, 0);
+    }
   },
   clearCart: () => {
     const { items, triggerNotification } = get();

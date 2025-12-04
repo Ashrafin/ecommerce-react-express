@@ -1,9 +1,16 @@
-import { useRef, useEffect, useState } from "react";
+import {
+  useRef,
+  useEffect,
+  useState
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { easings } from "@/animations/easings";
 
-const SearchBar = ({ isSearchOpened, handleCloseSearch }) => {
+const SearchBar = ({
+  isSearchOpened,
+  handleCloseSearch
+}) => {
   const [isExiting, setIsExiting] = useState(false);
   const [query, setQuery] = useState("");
   const inputRef = useRef(null);
@@ -93,7 +100,10 @@ const SearchBar = ({ isSearchOpened, handleCloseSearch }) => {
     if (isSearchOpened && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [inputRef, isSearchOpened]);
+  }, [
+    inputRef,
+    isSearchOpened
+  ]);
 
   return (
     <>

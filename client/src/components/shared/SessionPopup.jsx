@@ -1,7 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import "@/styles/SessionPopup.styles.css";
 
-const SessionPopup = ({ showPopup, extendSession, timeRemaining }) => {
+const SessionPopup = ({
+  showPopup,
+  extendSession,
+  timeRemaining
+}) => {
   const [visible, setVisible] = useState(false);
   const progressRef = useRef(null);
 
@@ -36,9 +44,18 @@ const SessionPopup = ({ showPopup, extendSession, timeRemaining }) => {
               aria-valuemax="100"
             />
           </div>
-          <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          <p className="fs-6 fw-bold mb-1">Session expiring soon!</p>
-          <p className="fs-6 mb-4">Your session will expire in about <time>{timeRemaining}</time> seconds.</p>
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          />
+          <p className="fs-6 fw-bold mb-1">
+            Session expiring soon!
+          </p>
+          <p className="fs-6 mb-4">
+            Your session will expire in about <time>{timeRemaining}</time> seconds.
+          </p>
           <button
             type="button"
             className="btn btn-sm btn-outline-warning"

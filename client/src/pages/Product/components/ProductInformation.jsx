@@ -34,11 +34,17 @@ const ProductInformation = ({ product }) => {
       <h3 className="fs-6 fw-normal lh-base text-body-secondary inter my-1">
         {product.description}
       </h3>
-      <StarRatings rating={product.rating} reviewCount={product.reviews.length} starSize="lg" />
+      <StarRatings
+        rating={product.rating}
+        reviewCount={product.reviews.length}
+        starSize="lg"
+      />
       <div className="d-flex justify-content-between align-items-center my-4">
         <div className="d-flex flex-column">
           <div className={`d-flex flex-row ${discountPercentage >= 1 ? "mb-2" : ""}`}>
-            <h4 className="fs-4 urbanist fw-bold text-success me-2 mb-0">${discountedPrice.toFixed(2)}</h4>
+            <h4 className="fs-4 urbanist fw-bold text-success me-2 mb-0">
+              ${discountedPrice.toFixed(2)}
+            </h4>
             <h4 className="fs-4 urbanist fw-medium text-secondary text-decoration-line-through text-opacity-50 mb-0">
               ${product.price}
             </h4>
@@ -46,7 +52,9 @@ const ProductInformation = ({ product }) => {
           {discountPercentage >= 1 && (
             <div style={{ width: "fit-content" }} className="d-flex bg-danger-subtle rounded-5 px-2 py-1">
               <i className="bi bi-tag-fill text-danger fs-6 me-2" />
-              <p className="text-danger urbanist fw-bold fs-6 mb-0">-{discountPercentage}%</p>
+              <p className="text-danger urbanist fw-bold fs-6 mb-0">
+                -{discountPercentage}%
+              </p>
             </div>
           )}
         </div>

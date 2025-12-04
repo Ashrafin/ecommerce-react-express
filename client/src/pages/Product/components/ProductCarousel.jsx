@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import {
+  AnimatePresence,
+  motion
+} from "motion/react";
 import { easings } from "@/animations/easings";
 import "@/styles/ProductCarousel.styles.css";
 
@@ -38,7 +41,11 @@ const ProductCarousel = ({ images }) => {
   return (
     <div className="col-12 col-lg-6">
       <div className="product-carousel-container position-relative overflow-hidden rounded-5 bg-light w-100">
-        <AnimatePresence mode="wait" custom={direction} initial="false">
+        <AnimatePresence
+          mode="wait"
+          custom={direction}
+          initial="false"
+        >
           <motion.img
             key={currentIndex}
             src={images[currentIndex]}

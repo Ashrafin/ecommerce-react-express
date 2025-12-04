@@ -6,11 +6,18 @@ import SessionPopup from "@/components/shared/SessionPopup";
 
 const withSessionManagement = (Component) => {
   return function WrappedComponent(props) {
-    const { isAuthenticated, isLoading } = useAuth0();
+    const {
+      isAuthenticated,
+      isLoading
+    } = useAuth0();
 
     useAutoLogout();
     useBackendAuth();
-    const { showPopup, extendSession, timeRemaining } = useSessionTimer({
+    const {
+      showPopup,
+      extendSession,
+      timeRemaining
+    } = useSessionTimer({
       showExtendPromptAt: 60,
       checkInterval: 5000
     });

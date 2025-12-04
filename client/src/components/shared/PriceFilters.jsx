@@ -1,7 +1,10 @@
 const MIN_PRICE_OPTIONS = [0, 50, 100, 250, 500];
 const MAX_PRICE_OPTIONS = [100, 250, 500, 1000, 2000];
 
-const PriceFilters = ({ draftFilters, setDraftFilters }) => {
+const PriceFilters = ({
+  draftFilters,
+  setDraftFilters
+}) => {
   const handleChangeMinPrice = (price) => {
     setDraftFilters((prev) => ({
       ...prev,
@@ -18,7 +21,9 @@ const PriceFilters = ({ draftFilters, setDraftFilters }) => {
 
   return (
     <>
-      <p className="urbanist fs-6 fw-bold mb-2 mt-3">Minimum Prices</p>
+      <p className="urbanist fs-6 fw-bold mb-2 mt-3">
+        Minimum Prices
+      </p>
       {MIN_PRICE_OPTIONS.map((price) => (
         <div key={`min-${price}`} className="form-check form-check-inline">
           <input
@@ -34,7 +39,9 @@ const PriceFilters = ({ draftFilters, setDraftFilters }) => {
           </label>
         </div>
       ))}
-      <p className="urbanist fs-6 fw-bold mb-2 mt-3">Maximum Prices</p>
+      <p className="urbanist fs-6 fw-bold mb-2 mt-3">
+        Maximum Prices
+      </p>
       {MAX_PRICE_OPTIONS.map((price) => (
         <div key={`max-${price}`} className="form-check form-check-inline">
           <input

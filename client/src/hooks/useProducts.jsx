@@ -9,10 +9,15 @@ const useProducts = ({
   query = null
 }) => {
   const baseUrl = query
-  ? `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&`
-  : `https://dummyjson.com/products?`;
+    ? `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&`
+    : `https://dummyjson.com/products?`;
   const url = `${baseUrl}limit=${limit}&skip=${skip}`;
-  const { data, isLoading, hasError, error } = useFetch(url);
+  const {
+    data,
+    isLoading,
+    hasError,
+    error
+  } = useFetch(url);
 
   const { products, total } = useMemo(() => {
     if (!data?.products?.length) return { products: [], total: 0 };
@@ -24,21 +29,21 @@ const useProducts = ({
     }
 
     if (
-      filters.minPrice !== null && 
+      filters.minPrice !== null &&
       filters.minPrice !== undefined
     ) {
       result = result.filter((product) => product.price >= filters.minPrice);
     }
 
     if (
-      filters.maxPrice !== null && 
+      filters.maxPrice !== null &&
       filters.maxPrice !== undefined
     ) {
       result = result.filter((product) => product.price <= filters.maxPrice);
     }
 
     if (
-      sort === "asc" || 
+      sort === "asc" ||
       sort === null
     ) {
       result.sort((a, b) => a.price - b.price);
@@ -67,11 +72,11 @@ const useProducts = ({
         filters.categories.includes(product.category);
 
       const matchesMinPrice =
-        filters.minPrice === null || 
+        filters.minPrice === null ||
         product.price >= filters.minPrice;
 
       const matchesMaxPrice =
-        filters.maxPrice === null || 
+        filters.maxPrice === null ||
         product.price <= filters.maxPrice;
 
       return matchesCategory && matchesMinPrice && matchesMaxPrice;

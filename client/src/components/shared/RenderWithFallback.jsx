@@ -1,6 +1,15 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState
+} from "react";
 
-const RenderWithFallback = ({ isLoading, hasError, fallback, children, delay = 200 }) => {
+const RenderWithFallback = ({
+  isLoading,
+  hasError,
+  fallback,
+  children,
+  delay = 200
+}) => {
   const [showFallback, setShowFallback] = useState(isLoading);
 
   useEffect(() => {

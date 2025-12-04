@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState
+} from "react";
 
 const useFetch = (url, options = {}) => {
   const [data, setData] = useState(null);
@@ -38,7 +41,12 @@ const useFetch = (url, options = {}) => {
     return () => controller.abort();
   }, [url]);
 
-  return { data, isLoading, hasError, error };
+  return {
+    data,
+    isLoading,
+    hasError,
+    error
+  };
 };
 
 export default useFetch;

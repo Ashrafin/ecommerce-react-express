@@ -1,7 +1,13 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState
+} from "react";
 
-const useSessionTimer = ({ showExtendPromptAt = 60, checkInterval = 5000 } = {}) => {
+const useSessionTimer = ({
+  showExtendPromptAt = 60,
+  checkInterval = 5000
+} = {}) => {
   const { isAuthenticated, getAccessTokenSilently, logout } = useAuth0();
   const [showPopup, setShowPopup] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(null);

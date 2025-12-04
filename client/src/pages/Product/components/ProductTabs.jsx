@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { easings } from "@/animations/easings";
 import ReviewsTab from "./ReviewsTab";
 import ShippingTab from "./ShippingTab";
 import DetailsTab from "./DetailsTab";
+import { easings } from "@/animations/easings";
 import "@/styles/ProductTabs.styles.css";
 
 const tabs = [
@@ -38,7 +38,11 @@ const ProductTabs = ({
       <div className="productInfo-stagger-item d-flex product-tabs rounded-5 bg-light w-100 overflow-x-scroll p-2 mb-4">
         <ul className="nav nav-pills m-0" role="tablist">
           {tabs.map(({ key, label }) => (
-            <li key={key} className="nav-item flex-fill" role="presentation">
+            <li
+              key={key}
+              className="nav-item flex-fill"
+              role="presentation"
+            >
               <button
                 className={`nav-link text-info-emphasis urbanist fw-semibold rounded-pill w-100 position-relative`}
                 type="button"
@@ -53,7 +57,9 @@ const ProductTabs = ({
                     {...slideTransition}
                   />
                 )}
-                <span className="position-relative z-1">{label}</span>
+                <span className="position-relative z-1">
+                  {label}
+                </span>
               </button>
             </li>
           ))}

@@ -1,8 +1,15 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState
+} from "react";
 
 const useAutoLogout = (intervalMs = 7200000) => {
-  const { isAuthenticated, getAccessTokenSilently, logout } = useAuth0();
+  const {
+    isAuthenticated,
+    getAccessTokenSilently,
+    logout
+  } = useAuth0();
   const [hasLoggedOut, setHasLoggedOut] = useState(false);
 
   useEffect(() => {
@@ -23,7 +30,12 @@ const useAutoLogout = (intervalMs = 7200000) => {
     const interval = setInterval(checkToken, intervalMs);
 
     return () => clearInterval(interval);
-  }, [isAuthenticated, getAccessTokenSilently, logout, hasLoggedOut]);
+  }, [
+    isAuthenticated,
+    getAccessTokenSilently,
+    logout,
+    hasLoggedOut
+  ]);
 
   return null;
 };

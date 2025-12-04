@@ -1,4 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  useNavigate,
+  useParams
+} from "react-router-dom";
 import { motion } from "motion/react";
 import useProduct from "@/hooks/useProduct";
 import useRecommendedProducts from "@/hooks/useRecommendedProducts";
@@ -84,7 +87,9 @@ const ProductPage = () => {
         delay={1000}
       >
         <div className="d-flex flex-column my-5">
-          <h4 className="fs-4 fw-bold urbanist text-body-emphasis mb-4">Recommended</h4>
+          <h4 className="fs-4 fw-bold urbanist text-body-emphasis mb-4">
+            Recommended
+          </h4>
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <RecommendedProducts products={similarProducts} />
           </div>

@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState
+} from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import usePaginationParams from "@/hooks/usePaginationParams";
@@ -47,7 +50,9 @@ const SearchPage = () => {
         hasError={hasError || !products || products.length < 1}
         fallback={
           <>
-            <h3 className="fw-semibold fs-4 urbanist text-body-emphasis mb-4">Looks like nothing was found for: {searchQuery}</h3>
+            <h3 className="fw-semibold fs-4 urbanist text-body-emphasis mb-4">
+              Looks like nothing was found for: {searchQuery}
+            </h3>
           </>
         }
         delay={1000}
@@ -94,7 +99,10 @@ const SearchPage = () => {
   return (
     <>
       <Container utilityClasses="py-5 px-3 px-md-4">
-        <Filters appliedFilters={filters} availableCategories={categories} />
+        <Filters
+          appliedFilters={filters}
+          availableCategories={categories}
+        />
         <motion.div className="w-100" {...fadeSlideUpSearch}>
           {_renderHeader()}
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">

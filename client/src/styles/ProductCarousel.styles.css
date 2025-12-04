@@ -4,7 +4,8 @@
   transition: height 0.35s cubic-bezier(0.12, 0, 0.39, 0);
 }
 
-@media (width >= 491px) {
+@media (width >=491px) {
+
   .product-carousel-container {
     height: 460px;
   }
