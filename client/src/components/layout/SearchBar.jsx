@@ -5,6 +5,7 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
+import BodyPortal from "@/components/shared/BodyPortal";
 import { easings } from "@/animations/easings";
 
 const SearchBar = ({
@@ -97,7 +98,10 @@ const SearchBar = ({
   };
 
   useEffect(() => {
-    if (isSearchOpened && inputRef.current) {
+    if (
+      isSearchOpened &&
+      inputRef.current
+    ) {
       inputRef.current.focus();
     }
   }, [
@@ -106,7 +110,7 @@ const SearchBar = ({
   ]);
 
   return (
-    <>
+    <BodyPortal>
       <motion.div
         className="bg-light vh-100 vw-100 position-fixed top-0 end-0"
         style={{ zIndex: 1021 }}
@@ -123,7 +127,7 @@ const SearchBar = ({
         </motion.span>
       </motion.div>
       <motion.div
-        className="position-absolute top-50 start-50 translate-middle bg-light-subtle rounded-pill border border-1 border-light-subtle ps-2 pe-3"
+        className="position-fixed top-50 start-50 translate-middle bg-light-subtle rounded-pill border border-1 border-light-subtle ps-2 pe-3"
         style={{ zIndex: 1022, width: 40, height: "auto" }}
         {...slideOutFromLeftTransition}
       >
@@ -149,7 +153,7 @@ const SearchBar = ({
           </span>
         </div>
       </motion.div>
-    </>
+    </BodyPortal>
   );
 };
 

@@ -12,7 +12,10 @@ import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCard from "@/components/shared/ProductCard";
 import Pagination from "@/components/shared/Pagination";
 import Filters from "@/components/shared/Filters";
-import { fadeSlideUpSearch } from "@/animations/transitions/search";
+import {
+  staggeredContainerVariants,
+  staggeredItemVariants
+} from "@/animations/transitions/staggered";
 
 const SearchPage = () => {
   const { search } = useLocation();
@@ -70,14 +73,42 @@ const SearchPage = () => {
         isLoading={isLoading}
         hasError={hasError || !products}
         fallback={
-          <>
-            {[...Array(limit)].map((_, i) => <Placeholder key={i} type="product card" />)}
-          </>
+          <motion.div
+            className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"
+            variants={staggeredContainerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            key="placeholders"
+          >
+            {[...Array(limit)].map((_, i) => (
+              <motion.div
+                key={i}
+                variants={staggeredItemVariants}
+              >
+                <Placeholder type="product card" />
+              </motion.div>
+            ))}
+          </motion.div>
         }
         delay={1000}
       >
-        <>
-          {products?.map((product) => <ProductCard key={product.id} product={product} />)}
+        <motion.div
+          className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"
+          variants={staggeredContainerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          key="products"
+        >
+          {products?.map((product) => (
+            <motion.div
+              key={product.id}
+              variants={staggeredItemVariants}
+            >
+              <ProductCard product={product} />
+            </motion.div>
+          ))}
           {products.length > 0 && (
             <Pagination
               currentPage={page}
@@ -86,7 +117,7 @@ const SearchPage = () => {
               handlePageChange={setPage}
             />
           )}
-        </>
+        </motion.div>
       </RenderWithFallback>
     );
   };
@@ -103,12 +134,10 @@ const SearchPage = () => {
           appliedFilters={filters}
           availableCategories={categories}
         />
-        <motion.div className="w-100" {...fadeSlideUpSearch}>
+        <motion.div variants={staggeredItemVariants}>
           {_renderHeader()}
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
-            {_renderProducts()}
-          </div>
         </motion.div>
+        {_renderProducts()}
       </Container>
     </>
   );

@@ -12,6 +12,7 @@ import HomePage from "@/pages/Home";
 import ProfilePage from "@/pages/Profile";
 import ProductPage from "@/pages/Product";
 import SearchPage from "@/pages/Search";
+import CartPage from "@/pages/Cart";
 import AuthGuard from "@/components/shared/AuthGuard";
 import Navbar from "@/components/layout/Navbar";
 import SearchBar from "@/components/layout/SearchBar";
@@ -97,6 +98,14 @@ const AnimatedRoutes = ({ handleOpenCart }) => {
             element={
               <PageTransitionAnimation>
                 <SearchPage />
+              </PageTransitionAnimation>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <PageTransitionAnimation>
+                <CartPage />
               </PageTransitionAnimation>
             }
           />

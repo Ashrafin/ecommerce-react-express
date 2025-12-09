@@ -44,4 +44,7 @@ const fadeSlideUpProduct = {
   }
 };
 
-export { fadeInOutProduct, fadeSlideUpProduct };
+export {
+  fadeInOutProduct,
+  fadeSlideUpProduct
+};

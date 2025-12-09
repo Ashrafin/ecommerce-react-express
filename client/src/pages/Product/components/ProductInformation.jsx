@@ -1,8 +1,12 @@
+import { motion } from "motion/react";
 import { useCartStore } from "@/store/useCartStore";
 import StarRatings from "@/components/ui/StarRatings";
 import ProductTabs from "./ProductTabs";
 
-const ProductInformation = ({ product }) => {
+const ProductInformation = ({
+  product,
+  variants
+}) => {
   if (!product) return <></>;
 
   const addItemToCart = useCartStore(store => store.addItem);
@@ -11,7 +15,10 @@ const ProductInformation = ({ product }) => {
   const discountPercentage = Math.floor(product.discountPercentage);
 
   return (
-    <div className="col-12 col-lg-6 col-lg-5 pt-4 ps-lg-5 pt-lg-0">
+    <motion.div
+      className="col-12 col-lg-6 col-lg-5 pt-4 ps-lg-5 pt-lg-0"
+      variants={variants}
+    >
       <p className="fs-5 fw-semibold text-body-emphasis urbanist mb-2">
         {product.brand}
       </p>
@@ -39,6 +46,15 @@ const ProductInformation = ({ product }) => {
         reviewCount={product.reviews.length}
         starSize="lg"
       />
+      {product.stock > 0 ? (
+        <p className="inter fs-8 fw-medium text-success mb-3">
+          In Stock
+        </p>
+      ) : (
+        <p className="inter fs-8 fw-medium text-danger mb-3">
+          Out of Stock
+        </p>
+      )}
       <div className="d-flex justify-content-between align-items-center my-4">
         <div className="d-flex flex-column">
           <div className={`d-flex flex-row ${discountPercentage >= 1 ? "mb-2" : ""}`}>
@@ -50,7 +66,10 @@ const ProductInformation = ({ product }) => {
             </h4>
           </div>
           {discountPercentage >= 1 && (
-            <div style={{ width: "fit-content" }} className="d-flex bg-danger-subtle rounded-5 px-2 py-1">
+            <div
+              style={{ width: "fit-content" }}
+              className="d-flex bg-danger-subtle rounded-5 px-2 py-1"
+            >
               <i className="bi bi-tag-fill text-danger fs-6 me-2" />
               <p className="text-danger urbanist fw-bold fs-6 mb-0">
                 -{discountPercentage}%
@@ -58,13 +77,15 @@ const ProductInformation = ({ product }) => {
             </div>
           )}
         </div>
-        <button
-          onClick={() => addItemToCart(product)}
-          type="button"
-          className="btn bg-info-subtle text-info-emphasis border-0 rounded-pill urbanist fw-semibold px-4"
-        >
-          Add to Cart
-        </button>
+        {product.stock > 0 && (
+          <button
+            onClick={() => addItemToCart(product)}
+            type="button"
+            className="btn bg-info-subtle text-info-emphasis border-0 rounded-pill urbanist fw-semibold px-4"
+          >
+            Add to Cart
+          </button>
+        )}
       </div>
       {product && (
         <ProductTabs
@@ -76,7 +97,7 @@ const ProductInformation = ({ product }) => {
           reviews={product.reviews}
         />
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -12,7 +12,10 @@ import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCarousel from "./components/ProductCarousel";
 import ProductInformation from "./components/ProductInformation";
 import RecommendedProducts from "./components/RecommendedProducts";
-import { fadeSlideUpProduct } from "@/animations/transitions/product";
+import {
+  staggeredContainerVariants,
+  staggeredItemVariants
+} from "@/animations/transitions/staggered";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -60,7 +63,10 @@ const ProductPage = () => {
         fallback={<Placeholder type="carousel" />}
         delay={1000}
       >
-        <ProductCarousel images={product?.images} />
+        <ProductCarousel
+          images={product?.images}
+          variants={staggeredItemVariants}
+        />
       </RenderWithFallback>
     );
   };
@@ -73,7 +79,10 @@ const ProductPage = () => {
         fallback={<Placeholder type="product details" />}
         delay={1000}
       >
-        <ProductInformation product={product} />
+        <ProductInformation
+          product={product}
+          variants={staggeredItemVariants}
+        />
       </RenderWithFallback>
     );
   };
@@ -101,13 +110,22 @@ const ProductPage = () => {
   return (
     <>
       <Container utilityClasses="py-4 px-3 px-md-4">
-        <motion.div {...fadeSlideUpProduct}>
-          {_renderBreadcrumb()}
+        <motion.div
+          variants={staggeredContainerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          <motion.div variants={staggeredItemVariants}>
+            {_renderBreadcrumb()}
+          </motion.div>
           <div className="row">
             {_renderCarousel()}
             {_renderProductDetails()}
           </div>
-          {_renderRecommendedProducts()}
+          <motion.div variants={staggeredItemVariants}>
+            {_renderRecommendedProducts()}
+          </motion.div>
         </motion.div>
       </Container>
     </>

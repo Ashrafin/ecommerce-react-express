@@ -20,7 +20,7 @@ const CartItemCount = ({
       className="position-relative btn-cart-item text-light ms-3"
       onClick={handleOpenCart}
     >
-      <AnimatePresence>
+      <AnimatePresence mode="popLayout">
         {count > 0 && (
           <motion.span
             key={count}
@@ -31,7 +31,7 @@ const CartItemCount = ({
               duration: 0.25,
               ease: easings.easeInOutQuad
             }}
-            className="position-absolute start-100 translate-middle badge rounded-pill bg-danger inter text-light fw-normal t-5 border border-1 border-light-subtle"
+            className="position-absolute start-100 translate-middle badge rounded-pill bg-danger inter text-light fw-semibold t-5"
           >
             {cartCount()}
           </motion.span>

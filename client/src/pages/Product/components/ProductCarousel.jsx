@@ -6,7 +6,10 @@ import {
 import { easings } from "@/animations/easings";
 import "@/styles/ProductCarousel.styles.css";
 
-const ProductCarousel = ({ images }) => {
+const ProductCarousel = ({
+  images,
+  variants
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -39,7 +42,10 @@ const ProductCarousel = ({ images }) => {
   };
 
   return (
-    <div className="col-12 col-lg-6">
+    <motion.div
+      className="col-12 col-lg-6"
+      variants={variants}
+    >
       <div className="product-carousel-container position-relative overflow-hidden rounded-5 bg-light w-100">
         <AnimatePresence
           mode="wait"
@@ -91,7 +97,7 @@ const ProductCarousel = ({ images }) => {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

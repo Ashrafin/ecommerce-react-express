@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useCartStore } from "@/store/useCartStore";
 import {
   motion,
@@ -13,6 +14,12 @@ const CartCanvas = ({
 }) => {
   const items = useCartStore(store => store.items);
   const totalPrice = useCartStore(store => store.totalPrice());
+  const navigate = useNavigate();
+
+  const handleGoToCart = () => {
+    handleCloseCart();
+    navigate("/cart");
+  };
 
   const containerVariants = {
     hidden: {
@@ -52,7 +59,7 @@ const CartCanvas = ({
 
   return (
     <Offcanvas
-      title="Cart"
+      title="Shopping Cart"
       position="end"
       isCartOpen={isCartOpen}
       handleCloseCart={handleCloseCart}
@@ -74,7 +81,10 @@ const CartCanvas = ({
         )}
 
         {items.length > 0 && (
-          <motion.h6 variants={itemVariants} className="inter fw-medium">
+          <motion.h6
+            variants={itemVariants}
+            className="inter fw-medium"
+          >
             Subtotal: <span className="text-success urbanist fw-semibold">${totalPrice.toFixed(2)}</span>
           </motion.h6>
         )}
@@ -98,6 +108,7 @@ const CartCanvas = ({
           <motion.button
             variants={itemVariants}
             className="btn btn-sm bg-info-subtle text-info-emphasis inter fw-semibold mt-3 py-2 border-0 rounded-pill"
+            onClick={handleGoToCart}
           >
             Go to Cart
           </motion.button>

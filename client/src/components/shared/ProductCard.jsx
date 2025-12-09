@@ -10,7 +10,11 @@ const ProductCard = ({ product }) => {
   const _renderCategory = () => {
     if (!product.category) return <></>;
 
-    return <span className="badge rounded-pill bg-light text-body-emphasis text-capitalize inter fw-normal mb-2 me-2 border border-light-subtle">{product.category}</span>;
+    return (
+      <span className="badge rounded-pill bg-light text-body-emphasis text-capitalize inter fw-normal mb-2 me-2 border border-light-subtle">
+        {product.category}
+      </span>
+    );
   };
 
   const _renderTags = () => {
@@ -19,7 +23,14 @@ const ProductCard = ({ product }) => {
 
     return (
       <>
-        {filteredTags.map((tag) => <span key={tag} className="badge rounded-pill bg-light text-body-emphasis text-capitalize inter fw-normal mb-2 me-2 border border-light-subtle">{tag}</span>)}
+        {filteredTags.map((tag) => (
+          <span
+            key={tag}
+            className="badge rounded-pill bg-light text-body-emphasis text-capitalize inter fw-normal mb-2 me-2 border border-light-subtle"
+          >
+            {tag}
+          </span>
+        ))}
       </>
     );
   };
@@ -29,16 +40,26 @@ const ProductCard = ({ product }) => {
     const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
 
     return (
-      <p className="card-text text-success urbanist fs-5 fw-bold me-2 mb-0">${discountedPrice.toFixed(2)}</p>
+      <p className="card-text text-success urbanist fs-5 fw-bold me-2 mb-0">
+        ${discountedPrice.toFixed(2)}
+      </p>
     );
   };
 
   const _renderOriginalPrice = () => {
     if (!product.discountPercentage) {
-      return <p className="card-title text-success urbanist fw-bold fs-5 mb-0">${product.price}</p>
+      return (
+        <p className="card-title text-success urbanist fw-bold fs-5 mb-0">
+          ${product.price}
+        </p>
+      );
     }
 
-    return <p className="card-title text-secondary text-decoration-line-through text-opacity-50 urbanist fw-medium fs-5 mb-0">${product.price}</p>
+    return (
+      <p className="card-title text-secondary text-decoration-line-through text-opacity-50 urbanist fw-medium fs-5 mb-0">
+        ${product.price}
+      </p>
+    );
   };
 
   const goToProductPage = (productId) => {
@@ -52,7 +73,7 @@ const ProductCard = ({ product }) => {
       <div className="card product-card h-100 border-1 border-light-subtle rounded-5 position-relative bg-light">
         {discountPercentage >= 1 && (
           <div className="d-flex flex-row discount-percentage rounded-5 bg-danger bg-opacity-25 py-1 px-2 position-absolute">
-            <i className="bi bi-tag-fill text-danger fs-7 me-2"></i>
+            <i className="bi bi-tag-fill text-danger fs-7 me-2" />
             <p className="text-danger urbanist fw-bold fs-7 mb-0">
               -{discountPercentage}%
             </p>
@@ -75,7 +96,20 @@ const ProductCard = ({ product }) => {
             <h6 className="card-subtitle text-body-secondary text-truncate inter fs-7 fw-normal mb-0">
               {product.description}
             </h6>
-            <StarRatings rating={product.rating} reviewCount={product.reviews.length} starSize="sm" />
+            <StarRatings
+              rating={product.rating}
+              reviewCount={product.reviews.length}
+              starSize="sm"
+            />
+            {product.stock > 0 ? (
+              <p className="inter fs-8 fw-medium text-success mb-0">
+                In Stock
+              </p>
+            ) : (
+              <p className="inter fs-8 fw-medium text-danger mb-0">
+                Out of Stock
+              </p>
+            )}
             <div className="d-flex mt-2 mb-2">
               {_renderPriceWithDiscount()}
               {_renderOriginalPrice()}
@@ -88,13 +122,15 @@ const ProductCard = ({ product }) => {
               >
                 View Details
               </button>
-              <button
-                type="button"
-                className="btn btn-sm bg-info-subtle border-0 px-3 rounded-pill ms-1"
-                onClick={() => addItemToCart(product)}
-              >
-                <i className="bi bi-bag-fill text-info-emphasis fs-6" />
-              </button>
+              {product.stock > 0 && (
+                <button
+                  type="button"
+                  className="btn btn-sm bg-info-subtle border-0 px-3 rounded-pill ms-1"
+                  onClick={() => addItemToCart(product)}
+                >
+                  <i className="bi bi-bag-fill text-info-emphasis fs-6" />
+                </button>
+              )}
             </div>
           </div>
         </div>

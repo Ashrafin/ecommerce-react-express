@@ -28,7 +28,6 @@ export const useCartStore = create((set, get) => ({
       set({ timeoutId });
     }
   },
-
   hideNotification: () => {
     const { timeoutId } = get();
     if (timeoutId) {
@@ -39,7 +38,6 @@ export const useCartStore = create((set, get) => ({
       timeoutId: null
     });
   },
-
   processQueue: () => {
     const { notificationQueue } = get();
 
@@ -57,7 +55,6 @@ export const useCartStore = create((set, get) => ({
       set({ timeoutId });
     }
   },
-
   addItem: (product) => {
     const { items, triggerNotification } = get();
     const existing = items.find(item => item.id === product.id);
