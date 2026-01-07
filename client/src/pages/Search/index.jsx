@@ -3,7 +3,6 @@ import {
   useState
 } from "react";
 import { useLocation } from "react-router-dom";
-import { motion } from "motion/react";
 import usePaginationParams from "@/hooks/usePaginationParams";
 import useProducts from "@/hooks/useProducts";
 import Container from "@/components/ui/Container";
@@ -12,6 +11,7 @@ import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCard from "@/components/shared/ProductCard";
 import Pagination from "@/components/shared/Pagination";
 import Filters from "@/components/shared/Filters";
+import { motion } from "motion/react";
 import {
   staggeredContainerVariants,
   staggeredItemVariants
@@ -130,14 +130,25 @@ const SearchPage = () => {
   return (
     <>
       <Container utilityClasses="py-5 px-3 px-md-4">
-        <Filters
-          appliedFilters={filters}
-          availableCategories={categories}
-        />
-        <motion.div variants={staggeredItemVariants}>
-          {_renderHeader()}
+        <motion.div
+          variants={staggeredContainerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          <motion.div variants={staggeredItemVariants}>
+            <Filters
+              appliedFilters={filters}
+              availableCategories={categories}
+            />
+          </motion.div>
+          <motion.div variants={staggeredItemVariants}>
+            {_renderHeader()}
+          </motion.div>
+          <motion.div variants={staggeredItemVariants}>
+            {_renderProducts()}
+          </motion.div>
         </motion.div>
-        {_renderProducts()}
       </Container>
     </>
   );

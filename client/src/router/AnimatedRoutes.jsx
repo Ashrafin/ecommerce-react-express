@@ -2,7 +2,8 @@ import { useState } from "react";
 import {
   Routes,
   Route,
-  useLocation
+  useLocation,
+  useNavigate
 } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { easings } from "@/animations/easings";
@@ -13,6 +14,8 @@ import ProfilePage from "@/pages/Profile";
 import ProductPage from "@/pages/Product";
 import SearchPage from "@/pages/Search";
 import CartPage from "@/pages/Cart";
+import SigningOutPage from "@/pages/SigningOut";
+import SigningInPage from "@/pages/SigningIn";
 import AuthGuard from "@/components/shared/AuthGuard";
 import Navbar from "@/components/layout/Navbar";
 import SearchBar from "@/components/layout/SearchBar";
@@ -20,14 +23,12 @@ import CartNotification from "@/components/shared/CartNotification";
 import PageTransitionAnimation from "@/animations/PageTransitionAnimation";
 import FadeInOut from "@/animations/FadeInOut";
 
+const ProfilePageWithAuth = withSessionManagement(ProfilePage);
+
 const AnimatedRoutes = ({ handleOpenCart }) => {
   const location = useLocation();
-  const {
-    isAuthenticated,
-    loginWithRedirect,
-    logout
-  } = useAuth0();
-  const ProfilePageWithAuth = withSessionManagement(ProfilePage);
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth0();
   const [isSearchOpened, setIsSearchOpened] = useState(false);
 
   const handleOpenSearch = () => {
@@ -38,6 +39,14 @@ const AnimatedRoutes = ({ handleOpenCart }) => {
   const handleCloseSearch = () => {
     setIsSearchOpened(false);
     document.body.style.overflow = "unset";
+  };
+
+  const handleLogin = () => {
+    navigate("/signing-in");
+  };
+
+  const handleLogout = () => {
+    navigate("/signing-out");
   };
 
   return (
@@ -52,8 +61,8 @@ const AnimatedRoutes = ({ handleOpenCart }) => {
         >
           <Navbar
             isAuthenticated={isAuthenticated}
-            loginWithRedirect={loginWithRedirect}
-            logout={logout}
+            handleLogin={handleLogin}
+            handleLogout={handleLogout}
             handleOpenSearch={handleOpenSearch}
             handleOpenCart={handleOpenCart}
           />
@@ -106,6 +115,22 @@ const AnimatedRoutes = ({ handleOpenCart }) => {
             element={
               <PageTransitionAnimation>
                 <CartPage />
+              </PageTransitionAnimation>
+            }
+          />
+          <Route
+            path="/signing-out"
+            element={
+              <PageTransitionAnimation>
+                <SigningOutPage />
+              </PageTransitionAnimation>
+            }
+          />
+          <Route
+            path="/signing-in"
+            element={
+              <PageTransitionAnimation>
+                <SigningInPage />
               </PageTransitionAnimation>
             }
           />

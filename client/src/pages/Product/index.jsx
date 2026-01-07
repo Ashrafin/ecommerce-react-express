@@ -2,9 +2,11 @@ import {
   useNavigate,
   useParams
 } from "react-router-dom";
-import { motion } from "motion/react";
+import { useEffect } from "react";
 import useProduct from "@/hooks/useProduct";
 import useRecommendedProducts from "@/hooks/useRecommendedProducts";
+import { addToRecentlyViewedProducts } from "@/utils/recentlyViewed";
+import { trackProductTags } from "@/utils/topTags";
 import Container from "@/components/ui/Container";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Placeholder from "@/components/ui/Placeholder";
@@ -12,6 +14,7 @@ import RenderWithFallback from "@/components/shared/RenderWithFallback";
 import ProductCarousel from "./components/ProductCarousel";
 import ProductInformation from "./components/ProductInformation";
 import RecommendedProducts from "./components/RecommendedProducts";
+import { motion } from "motion/react";
 import {
   staggeredContainerVariants,
   staggeredItemVariants
@@ -32,6 +35,16 @@ const ProductPage = () => {
     error: similarProductsError
   } = useRecommendedProducts(product?.category, product?.id);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!productDetailsLoading && product) {
+      addToRecentlyViewedProducts(product);
+      trackProductTags(product.tags);
+    }
+  }, [
+    product,
+    productDetailsLoading
+  ]);
 
   const handleBack = () => {
     navigate(-1);

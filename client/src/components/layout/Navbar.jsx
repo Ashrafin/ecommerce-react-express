@@ -7,8 +7,8 @@ import CartItemCount from "@/components/ui/CartItemCount";
 
 const Navbar = ({
   isAuthenticated,
-  loginWithRedirect,
-  logout,
+  handleLogin,
+  handleLogout,
   handleOpenSearch,
   handleOpenCart
 }) => {
@@ -53,7 +53,7 @@ const Navbar = ({
                     <li>
                       <button
                         className="dropdown-item fs-6"
-                        onClick={() => { logout({ returnTo: window.location.origin }) }}
+                        onClick={handleLogout}
                       >
                         Logout
                       </button>
@@ -64,7 +64,7 @@ const Navbar = ({
                   <li>
                     <button
                       className="dropdown-item fs-6"
-                      onClick={() => loginWithRedirect()}
+                      onClick={handleLogin}
                     >
                       Login
                     </button>

@@ -109,12 +109,23 @@ const HomePage = () => {
   return (
     <>
       <Container utilityClasses="py-5 px-3 px-md-4">
-        <Filters
-          appliedFilters={filters}
-          availableCategories={categories}
-        />
-        {isFiltered && products.length < 1 && <h5 className="text-center urbanist fw-semibold">No Results Found</h5>}
-        {_renderProducts()}
+        <motion.div
+          variants={staggeredContainerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          <motion.div variants={staggeredItemVariants}>
+            <Filters
+              appliedFilters={filters}
+              availableCategories={categories}
+            />
+          </motion.div>
+          <motion.div variants={staggeredItemVariants}>
+            {isFiltered && products.length < 1 && <h5 className="text-center urbanist fw-semibold">No Results Found</h5>}
+            {_renderProducts()}
+          </motion.div>
+        </motion.div>
       </Container>
     </>
   );

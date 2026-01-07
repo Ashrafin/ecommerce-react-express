@@ -62,7 +62,7 @@ const ProductCard = ({ product }) => {
     );
   };
 
-  const goToProductPage = (productId) => {
+  const handleGoToProductPage = (productId) => {
     navigate(`/product/${productId}`)
   };
 
@@ -118,7 +118,7 @@ const ProductCard = ({ product }) => {
               <button
                 type="button"
                 className="btn btn-sm bg-info-subtle text-info-emphasis border-0 rounded-pill inter fw-medium flex-grow-1 me-1"
-                onClick={() => goToProductPage(product.id)}
+                onClick={() => handleGoToProductPage(product.id)}
               >
                 View Details
               </button>
