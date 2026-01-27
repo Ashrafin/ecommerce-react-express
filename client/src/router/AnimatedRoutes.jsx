@@ -22,7 +22,7 @@ import Navbar from "@/components/layout/Navbar";
 import SearchBar from "@/components/layout/SearchBar";
 import CartNotification from "@/components/shared/CartNotification";
 import PageTransitionAnimation from "@/animations/PageTransitionAnimation";
-import FadeInOut from "@/animations/FadeInOut";
+import { FadeInOut } from "@/animations/FadeInOut";
 
 const ProfilePageWithAuth = withSessionManagement(ProfilePage);
 
