@@ -1,6 +1,6 @@
 import { easings } from "../easings";
 
-const fadeSlideUpSearch = {
+export const fadeSlideUpSearch = {
   initial: {
     opacity: 0,
     y: 50
@@ -22,5 +22,3 @@ const fadeSlideUpSearch = {
     }
   }
 };
-
-export { fadeSlideUpSearch };

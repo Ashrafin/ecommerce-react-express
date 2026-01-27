@@ -96,7 +96,9 @@ const Offcanvas = ({
             exit="exit"
           >
             <div className="offcanvas-header-custom border-1 border-bottom border-light-subtle">
-              <h5 className="offcanvas-title-custom urbanist fw-semibold">{title}</h5>
+              <h5 className="offcanvas-title-custom urbanist fw-semibold">
+                {title}
+              </h5>
               <i
                 className="bi bi-x text-dark fs-4 pointer"
                 onClick={handleCloseCart}

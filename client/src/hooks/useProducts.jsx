@@ -11,7 +11,7 @@ const useProducts = ({
   const baseUrl = query
     ? `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&`
     : `https://dummyjson.com/products?`;
-  const url = `${baseUrl}limit=${limit}&skip=${skip}`;
+  const url = `${baseUrl}limit=0`;
   const {
     data,
     isLoading,
@@ -19,8 +19,8 @@ const useProducts = ({
     error
   } = useFetch(url);
 
-  const { products, total } = useMemo(() => {
-    if (!data?.products?.length) return { products: [], total: 0 };
+  const { products, total, filteredTotal } = useMemo(() => {
+    if (!data?.products?.length) return { products: [], total: 0, filteredTotal: 0 };
 
     let result = [...data.products];
 
@@ -42,6 +42,8 @@ const useProducts = ({
       result = result.filter((product) => product.price <= filters.maxPrice);
     }
 
+    const filteredCount = result.length;
+
     if (
       sort === "asc" ||
       sort === null
@@ -51,9 +53,12 @@ const useProducts = ({
       result.sort((a, b) => b.price - a.price);
     }
 
+    const paginatedResult = result.slice(skip, skip + limit);
+
     return {
-      products: result,
-      total: data?.total ?? 0
+      products: paginatedResult,
+      total: data?.total ?? 0,
+      filteredTotal: filteredCount
     };
   }, [
     data,
@@ -63,26 +68,6 @@ const useProducts = ({
     skip
   ]);
 
-  const filteredProducts = useMemo(() => {
-    if (!data?.products) return [];
-
-    return data.products.filter(product => {
-      const matchesCategory =
-        !filters.categories.length ||
-        filters.categories.includes(product.category);
-
-      const matchesMinPrice =
-        filters.minPrice === null ||
-        product.price >= filters.minPrice;
-
-      const matchesMaxPrice =
-        filters.maxPrice === null ||
-        product.price <= filters.maxPrice;
-
-      return matchesCategory && matchesMinPrice && matchesMaxPrice;
-    });
-  }, [data?.products, filters]);
-
   const hasActiveFilters =
     (filters.categories && filters.categories.length > 0) ||
     filters.minPrice !== null ||
@@ -91,7 +76,7 @@ const useProducts = ({
   return {
     products,
     total,
-    filteredTotal: filteredProducts.length,
+    filteredTotal,
     isFiltered: hasActiveFilters,
     isLoading,
     hasError,

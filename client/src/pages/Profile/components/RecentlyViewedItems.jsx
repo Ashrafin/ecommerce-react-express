@@ -25,6 +25,14 @@ const RecentlyViewedItems = ({ recentlyViewedProducts }) => {
               className="col"
             >
               <div className="card product-card h-100 border-1 border-light-subtle rounded-5 position-relative bg-light">
+                {product.discountPercentage >= 1 && (
+                  <div className="d-flex flex-row discount-percentage rounded-5 bg-danger bg-opacity-25 py-1 px-2 position-absolute">
+                    <i className="bi bi-tag-fill text-danger fs-7 me-2" />
+                    <p className="text-danger urbanist fw-bold fs-7 mb-0">
+                      -{Math.floor(product.discountPercentage)}%
+                    </p>
+                  </div>
+                )}
                 <img
                   style={{ height: 140 }}
                   src={product.thumbnail}
@@ -46,7 +54,7 @@ const RecentlyViewedItems = ({ recentlyViewedProducts }) => {
                     <h5 className="card-title text-body-emphasis text-truncate urbanist fs-6 fw-bold mb-0">
                       {product.title}
                     </h5>
-                    <div className="d-flex mb-3">
+                    <div className="d-flex mb-2">
                       {product.discountPercentage ? (
                         <>
                           <p className="card-title text-success urbanist fw-bold fs-6 mb-0 me-2">

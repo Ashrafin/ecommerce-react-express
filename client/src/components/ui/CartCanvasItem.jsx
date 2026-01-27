@@ -26,18 +26,18 @@ const CartCanvasItem = ({
     prevQuantityRef.current = item.quantity;
   }, [item.quantity]);
 
-  const hasDiscount = item.discountPercentage && item.discountPercentage > 0;
+  const hasDiscount = item.discount && item.discount > 0;
   const finalPrice = hasDiscount
-    ? item.price * (1 - item.discountPercentage / 100)
+    ? item.price * (1 - item.discount / 100)
     : item.price;
   const handleUpdateQuantity = useCartStore(store => store.updateQuantity);
   const handleRemoveItem = useCartStore(store => store.removeItem);
 
   const handleGoToProductPage = () => {
-    if (location.pathname === `/product/${item.id}`) return;
+    if (location.pathname === `/product/${item.productId}`) return;
 
     handleCloseCart();
-    setTimeout(() => navigate(`/product/${item.id}`), 150);
+    setTimeout(() => navigate(`/product/${item.productId}`), 150);
   };
 
   const variants = {
@@ -60,7 +60,7 @@ const CartCanvasItem = ({
       <div className="bg-light border border-light-subtle rounded-4 me-2">
         <img
           style={{ height: 160, width: 160 }}
-          className={`object-fit-contain ${location.pathname === `/product/${item.id}` ? "" : "pointer"}`}
+          className={`object-fit-contain ${location.pathname === `/product/${item.productId}` ? "" : "pointer"}`}
           src={item.thumbnail}
           onClick={handleGoToProductPage}
         />
@@ -73,16 +73,19 @@ const CartCanvasItem = ({
           {item.quantity === 1 && (
             <i
               className="bi bi-trash3 fs-6 text-dark-emphasis me-2 pointer"
-              onClick={() => handleRemoveItem(item.id)}
+              onClick={() => handleRemoveItem(item.productId)}
             />
           )}
           {item.quantity > 1 && (
             <i
               className="bi bi-dash fs-4 text-dark-emphasis pointer"
-              onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+              onClick={() => handleUpdateQuantity(item.productId, item.quantity - 1)}
             />
           )}
-          <div className="position-relative mx-2 d-flex justify-content-center align-items-center" style={{ width: '2rem', height: '1.5rem' }}>
+          <div
+            className="position-relative mx-2 d-flex justify-content-center align-items-center"
+            style={{ width: '2rem', height: '1.5rem' }}
+          >
             <AnimatePresence
               mode="popLayout"
               initial={false}
@@ -107,7 +110,7 @@ const CartCanvasItem = ({
           </div>
           <i
             className="bi bi-plus fs-4 text-dark-emphasis pointer"
-            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+            onClick={() => handleUpdateQuantity(item.productId, item.quantity + 1)}
           />
         </div>
       </div>

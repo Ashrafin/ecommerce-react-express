@@ -14,6 +14,7 @@ import ProfilePage from "@/pages/Profile";
 import ProductPage from "@/pages/Product";
 import SearchPage from "@/pages/Search";
 import CartPage from "@/pages/Cart";
+import CheckoutPage from "@/pages/Checkout";
 import SigningOutPage from "@/pages/SigningOut";
 import SigningInPage from "@/pages/SigningIn";
 import AuthGuard from "@/components/shared/AuthGuard";
@@ -28,7 +29,7 @@ const ProfilePageWithAuth = withSessionManagement(ProfilePage);
 const AnimatedRoutes = ({ handleOpenCart }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   const [isSearchOpened, setIsSearchOpened] = useState(false);
 
   const handleOpenSearch = () => {
@@ -42,7 +43,7 @@ const AnimatedRoutes = ({ handleOpenCart }) => {
   };
 
   const handleLogin = () => {
-    navigate("/signing-in");
+    navigate("/signing-in", { state: { returnTo: location.pathname } });
   };
 
   const handleLogout = () => {
@@ -60,6 +61,7 @@ const AnimatedRoutes = ({ handleOpenCart }) => {
           customClasses="sticky-top"
         >
           <Navbar
+            user={user}
             isAuthenticated={isAuthenticated}
             handleLogin={handleLogin}
             handleLogout={handleLogout}
@@ -115,6 +117,14 @@ const AnimatedRoutes = ({ handleOpenCart }) => {
             element={
               <PageTransitionAnimation>
                 <CartPage />
+              </PageTransitionAnimation>
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <PageTransitionAnimation>
+                <CheckoutPage />
               </PageTransitionAnimation>
             }
           />

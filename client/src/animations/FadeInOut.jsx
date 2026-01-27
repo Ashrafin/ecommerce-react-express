@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 
-const FadeInOut = ({
+export const FadeInOut = ({
   identifier: key,
   children,
   duration = 0.35,
@@ -37,5 +37,3 @@ const FadeInOut = ({
     </motion.div>
   );
 };
-
-export default FadeInOut;

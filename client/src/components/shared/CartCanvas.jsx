@@ -85,7 +85,9 @@ const CartCanvas = ({
             variants={itemVariants}
             className="inter fw-medium"
           >
-            Subtotal: <span className="text-success urbanist fw-semibold">${totalPrice.toFixed(2)}</span>
+            Subtotal: <span className="text-success urbanist fw-semibold">
+              ${totalPrice.toFixed(2)}
+            </span>
           </motion.h6>
         )}
 

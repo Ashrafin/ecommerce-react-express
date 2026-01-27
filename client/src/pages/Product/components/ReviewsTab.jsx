@@ -26,12 +26,12 @@ const ReviewsTab = ({ reviews }) => {
               </div>
               <div className="d-flex flex-row align-items-center">
                 <i className="bi bi-star-fill text-warning fs-7" />
-                <p className="fs-7 fw-normal inter text-body-tertiary ms-1 mb-0">
+                <p className="fs-7 fw-medium inter text-body-tertiary ms-1 mb-0">
                   {review.rating.toFixed(1)}
                 </p>
               </div>
             </div>
-            <p className="fs-7 lh-1 fw-normal inter text-body-emphasis mb-0">
+            <p className="fs-7 lh-1 fw-medium inter text-body-emphasis mb-0">
               {review.comment}
             </p>
           </div>

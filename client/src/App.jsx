@@ -6,12 +6,16 @@ import Container from "./components/ui/Container";
 import CartCanvas from "./components/shared/CartCanvas";
 import AnimatedRoutes from "./router/AnimatedRoutes";
 
+import { useCartStore } from "@/store/useCartStore";
+
 const App = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const handleOpenCart = () => setIsCartOpen(true);
   const handleCloseCart = () => setIsCartOpen(false);
+  const initializeCart = useCartStore(state => state.initializeCart);
 
   useEffect(() => {
+    initializeCart();
     document.body.setAttribute("data-bs-theme", "light");
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";

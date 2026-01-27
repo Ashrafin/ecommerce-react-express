@@ -1,6 +1,6 @@
 import { easings } from "../easings";
 
-const fadeSlideUpHome = {
+export const fadeSlideUpHome = {
   initial: {
     opacity: 0,
     y: 50
@@ -18,5 +18,3 @@ const fadeSlideUpHome = {
     ease: easings.easeInOutQuad
   }
 };
-
-export { fadeSlideUpHome };

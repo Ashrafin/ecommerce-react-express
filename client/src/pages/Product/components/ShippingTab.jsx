@@ -1,4 +1,7 @@
-const ShippingTab = ({ returnPolicy, shippingInfo }) => {
+const ShippingTab = ({
+  returnPolicy,
+  shippingInfo
+}) => {
   return (
     <div className="row d-flex flex-wrap g-3">
       <div className="col-6">
@@ -9,7 +12,7 @@ const ShippingTab = ({ returnPolicy, shippingInfo }) => {
               Return Policy
             </p>
           </div>
-          <p className="fs-7 fw-normal inter text-body-secondary mb-0 mt-1">
+          <p className="fs-7 fw-medium inter text-body-secondary mb-0 mt-1">
             {returnPolicy}
           </p>
         </div>
@@ -22,7 +25,7 @@ const ShippingTab = ({ returnPolicy, shippingInfo }) => {
               Shipping Time
             </p>
           </div>
-          <p className="fs-7 fw-normal inter text-body-secondary mb-0 mt-1">
+          <p className="fs-7 fw-medium inter text-body-secondary mb-0 mt-1">
             {shippingInfo}
           </p>
         </div>

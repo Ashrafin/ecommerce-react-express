@@ -1,6 +1,6 @@
 import { easings } from "../easings";
 
-const cartContainerVariants = {
+export const cartContainerVariants = {
   hidden: {
     opacity: 0
   },
@@ -19,7 +19,7 @@ const cartContainerVariants = {
   }
 };
 
-const cartItemVariants = {
+export const cartItemVariants = {
   hidden: {
     opacity: 0,
     y: 20
@@ -40,9 +40,4 @@ const cartItemVariants = {
       ease: easings.easeInQuad
     }
   }
-};
-
-export {
-  cartContainerVariants,
-  cartItemVariants
 };

@@ -109,9 +109,12 @@ const ProductPage = () => {
         delay={1000}
       >
         <div className="d-flex flex-column my-5">
-          <h4 className="fs-4 fw-bold urbanist text-body-emphasis mb-4">
+          <h4 className="fs-4 fw-bold urbanist text-body-emphasis mb-1">
             Recommended
           </h4>
+          <h6 className="inter fs-7 fw-normal text-body-secondary mb-4">
+            Based on similar products
+          </h6>
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <RecommendedProducts products={similarProducts} />
           </div>

@@ -4,6 +4,7 @@ import {
 } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import { motion } from "motion/react";
 import Container from "@/components/ui/Container";
 import CartItem from "./components/CartItem";
@@ -15,6 +16,7 @@ import "@/styles/CartPage.styles.css";
 
 const CartPage = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth0();
   const cartItems = useCartStore(state => state.items);
   const totalItems = useCartStore(state => state.totalItems());
   const totalPrice = useCartStore(state => state.totalPrice());
@@ -31,6 +33,14 @@ const CartPage = () => {
     cartItems,
     navigate
   ]);
+
+  const handleProceedToCheckout = () => {
+    if (isAuthenticated) {
+      navigate("/checkout", { state: { fromCartPage: true } });
+    } else {
+      navigate("/signing-in", { state: { returnTo: "/cart" } });
+    }
+  };
 
   if (
     cartItems.length === 0 &&
@@ -81,12 +91,12 @@ const CartPage = () => {
         animate="visible"
         exit="exit"
       >
-        <motion.h2
+        <motion.h4
           variants={staggeredItemVariants}
-          className="fw-bold fs-3 urbanist text-body-emphasis mb-4"
+          className="fs-4 fw-bold urbanist text-body-emphasis mb-4"
         >
           Shopping Cart
-        </motion.h2>
+        </motion.h4>
         <div className="d-flex flex-column">
           {cartItems.map(item => (
             <motion.div
@@ -104,12 +114,16 @@ const CartPage = () => {
           className="d-flex flex-column mt-4"
         >
           <p className="mb-4">
-            <span className="inter fs-6 fw-medium text-body-emphasis">Subtotal ({totalItems} {totalItems === 1 ? "item" : "items"}):</span>
-            <span className="urbanist fs-5 fw-bold text-success ms-2">${totalPrice?.toFixed(2)}</span>
+            <span className="inter fs-6 fw-medium text-body-emphasis">
+              Subtotal ({totalItems} {totalItems === 1 ? "item" : "items"}):
+            </span>
+            <span className="urbanist fs-5 fw-bold text-success ms-2">
+              ${totalPrice?.toFixed(2)}
+            </span>
           </p>
           <button
             className="btn btn-sm bg-info-subtle text-info-emphasis border-0 rounded-pill px-4 py-2 inter fw-medium w-fit-content"
-            onClick={() => console.log("Proceed to checkout page")}
+            onClick={handleProceedToCheckout}
           >
             Proceed to checkout
           </button>

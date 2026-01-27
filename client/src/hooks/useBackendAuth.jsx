@@ -18,9 +18,6 @@ const useBackendAuth = () => {
             Authorization: `Bearer ${token}`
           }
         });
-
-        const data = await res.json();
-        console.log("Backend verified: ", data);
       } catch (err) {
         console.error("Backend auth failed: ", err?.message || err);
       }

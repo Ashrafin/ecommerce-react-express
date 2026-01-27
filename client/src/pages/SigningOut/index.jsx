@@ -7,7 +7,6 @@ const SigningOutPage = () => {
   const { logout } = useAuth0();
 
   useEffect(() => {
-    // Small timeout to allow the entry animation to complete or start before redirecting
     const timer = setTimeout(() => {
       logout({ logoutParams: { returnTo: window.location.origin } });
     }, 500);
@@ -16,13 +15,18 @@ const SigningOutPage = () => {
   }, [logout]);
 
   return (
-    <Container utilityClasses="d-flex flex-column align-items-center justify-content-center vh-100">
+    <Container
+      utilityClasses="d-flex flex-column align-items-center justify-content-center"
+      customStyles={{ height: "calc(100vh - 60px)" }}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <h2 className="urbanist fw-bold fs-3 text-body-emphasis">Signing you out...</h2>
+        <h2 className="urbanist fw-bold fs-3 text-body-emphasis">
+          Signing you out...
+        </h2>
       </motion.div>
     </Container>
   );

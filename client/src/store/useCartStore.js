@@ -1,4 +1,8 @@
 import { create } from "zustand";
+import {
+  saveCartSnapshot,
+  loadCartSnapshot
+} from "@/utils/cartSnapshot";
 
 export const useCartStore = create((set, get) => ({
   items: [],
@@ -9,7 +13,10 @@ export const useCartStore = create((set, get) => ({
   timeoutId: null,
 
   triggerNotification: (message) => {
-    const { showNotification, notificationQueue } = get();
+    const {
+      showNotification,
+      notificationQueue
+    } = get();
     const id = Date.now() + Math.random();
 
     if (showNotification) {
@@ -55,43 +62,60 @@ export const useCartStore = create((set, get) => ({
       set({ timeoutId });
     }
   },
-  addItem: (product) => {
-    const { items, triggerNotification } = get();
-    const existing = items.find(item => item.id === product.id);
+  addItem: (newItem) => {
+    const {
+      items,
+      triggerNotification
+    } = get();
+    const existing = items.find(item => item.id === newItem.id);
 
     if (existing) {
-      const updated = items.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item);
+      const updated = items.map(item => item.id === newItem.id ? { ...item, quantity: item.quantity + 1 } : item);
       set({ items: updated });
-      triggerNotification(`${product.title} quantity increased`);
+      saveCartSnapshot(updated);
+      triggerNotification(`${newItem.title} quantity increased`);
       return;
     }
 
-    set({ items: [...items, { ...product, quantity: 1 }] });
-    triggerNotification(`${product.title} added to cart`);
+    const updatedItems = [...items, { ...newItem, quantity: 1 }];
+    set({ items: updatedItems });
+    saveCartSnapshot(updatedItems);
+    triggerNotification(`${newItem.title} added to cart`);
   },
   removeItem: (id) => {
-    const { items, triggerNotification } = get();
+    const {
+      items,
+      triggerNotification
+    } = get();
     const item = items.find(item => item.id === id);
 
     if (!item) return;
 
-    set({ items: items.filter(item => item.id !== id) });
+    const updatedItems = items.filter(item => item.id !== id);
+    set({ items: updatedItems });
+    saveCartSnapshot(updatedItems);
     triggerNotification(`${item.title} removed from cart`);
   },
   updateQuantity: (id, newQuantity) => {
-    const { items, triggerNotification } = get();
+    const {
+      items,
+      triggerNotification
+    } = get();
     const item = items.find(item => item.id === id);
 
     if (!item) return;
 
     if (newQuantity <= 0) {
-      set({ items: items.filter(item => item.id !== id) });
+      const updatedItems = items.filter(item => item.id !== id);
+      set({ items: updatedItems });
+      saveCartSnapshot(updatedItems);
       triggerNotification(`${item.title} removed from cart`);
       return;
     }
 
     const updated = items.map(item => item.id === id ? { ...item, quantity: newQuantity } : item);
     set({ items: updated });
+    saveCartSnapshot(updated);
     triggerNotification(`${item.title} updated to ${newQuantity} `);
   },
   totalItems: () => {
@@ -112,11 +136,26 @@ export const useCartStore = create((set, get) => ({
     }
   },
   clearCart: () => {
-    const { items, triggerNotification } = get();
+    const {
+      items,
+      triggerNotification
+    } = get();
 
     if (items.length === 0) return;
 
     set({ items: [] });
+    saveCartSnapshot([]);
     triggerNotification("Cart cleared");
+  },
+  initializeCart: () => {
+    const snapshot = loadCartSnapshot();
+    if (snapshot && Array.isArray(snapshot.items)) {
+      const hydratedItems = snapshot.items.map(item => ({
+        ...item,
+        id: item.productId,
+        discountPercentage: item.discount
+      }));
+      set({ items: hydratedItems });
+    }
   }
 }));

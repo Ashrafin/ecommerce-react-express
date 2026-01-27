@@ -10,7 +10,7 @@ const Breadcrumb = ({ items }) => {
           return (
             <li
               key={i}
-              className={`breadcrumb-item urbanist fw-semibold fs-6 ${isLast ? "text-secondary active" : ""}`}
+              className={`breadcrumb-item urbanist fw-semibold fs-6 ${isLast ? "text-dark active" : ""}`}
               aria-current={isLast ? "page" : undefined}
             >
               {item.to ? (

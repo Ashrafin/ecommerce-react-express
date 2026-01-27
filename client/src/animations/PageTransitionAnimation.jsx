@@ -46,7 +46,7 @@ const PageTransitionAnimation = ({ children }) => {
       opacity: 0.2,
       zIndex: 1021,
       transition: {
-        duration: 1,
+        duration: 0.5,
         ease: easings.easeOutQuad
       }
     }

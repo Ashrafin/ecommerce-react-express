@@ -40,7 +40,7 @@ const ProductCard = ({ product }) => {
     const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
 
     return (
-      <p className="card-text text-success urbanist fs-5 fw-bold me-2 mb-0">
+      <p className="card-text text-success urbanist fs-6 fw-bold me-2 mb-0">
         ${discountedPrice.toFixed(2)}
       </p>
     );
@@ -49,14 +49,14 @@ const ProductCard = ({ product }) => {
   const _renderOriginalPrice = () => {
     if (!product.discountPercentage) {
       return (
-        <p className="card-title text-success urbanist fw-bold fs-5 mb-0">
+        <p className="card-title text-success urbanist fw-bold fs-6 mb-0">
           ${product.price}
         </p>
       );
     }
 
     return (
-      <p className="card-title text-secondary text-decoration-line-through text-opacity-50 urbanist fw-medium fs-5 mb-0">
+      <p className="card-title text-secondary text-decoration-line-through text-opacity-50 urbanist fw-medium fs-6 mb-0">
         ${product.price}
       </p>
     );
@@ -68,8 +68,20 @@ const ProductCard = ({ product }) => {
 
   const discountPercentage = Math.floor(product.discountPercentage);
 
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    const item = {
+      id: product.id,
+      title: product.title,
+      thumbnail: product.thumbnail,
+      price: product.price,
+      discountPercentage: product.discountPercentage,
+    };
+    addItemToCart(item);
+  };
+
   return (
-    <div className="col">
+    <div className="col h-100">
       <div className="card product-card h-100 border-1 border-light-subtle rounded-5 position-relative bg-light">
         {discountPercentage >= 1 && (
           <div className="d-flex flex-row discount-percentage rounded-5 bg-danger bg-opacity-25 py-1 px-2 position-absolute">
@@ -90,10 +102,10 @@ const ProductCard = ({ product }) => {
             {_renderTags()}
           </div>
           <div className="d-flex flex-column">
-            <h5 className="card-title text-body-emphasis text-truncate urbanist fs-5 fw-bold mb-2">
+            <h5 className="card-title text-body-emphasis text-truncate urbanist fs-6 fw-bold mb-2">
               {product.title}
             </h5>
-            <h6 className="card-subtitle text-body-secondary text-truncate inter fs-7 fw-normal mb-0">
+            <h6 className="card-subtitle text-body-secondary text-truncate inter fs-8 fw-medium mb-1">
               {product.description}
             </h6>
             <StarRatings
@@ -126,7 +138,7 @@ const ProductCard = ({ product }) => {
                 <button
                   type="button"
                   className="btn btn-sm bg-info-subtle border-0 px-3 rounded-pill ms-1"
-                  onClick={() => addItemToCart(product)}
+                  onClick={handleAddToCart}
                 >
                   <i className="bi bi-bag-fill text-info-emphasis fs-6" />
                 </button>

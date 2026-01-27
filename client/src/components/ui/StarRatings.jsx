@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import Tooltip from "bootstrap/js/dist/tooltip";
 
-const StarRatings = ({ rating, reviewCount, starSize }) => {
+const StarRatings = ({
+  rating,
+  reviewCount,
+  starSize
+}) => {
   const filledStars = Math.floor(rating);
   const halfStar = rating % 1 >= 0.5;
   const emptyStars = 5 - filledStars - (halfStar ? 1 : 0);
@@ -15,7 +19,7 @@ const StarRatings = ({ rating, reviewCount, starSize }) => {
     };
   }, []);
 
-  const starSizeClass = starSize === "sm" ? "fs-7" : starSize === "lg" ? "fs-6" : "";
+  const starSizeClass = starSize === "sm" ? "fs-8" : starSize === "lg" ? "fs-7" : "";
 
   return (
     <div className="d-flex align-items-center">
@@ -41,7 +45,7 @@ const StarRatings = ({ rating, reviewCount, starSize }) => {
           />
         ))}
       </div>
-      <p className={`text-body-tertiary inter fw-normal ${starSizeClass} ms-1 my-0`}>
+      <p className={`text-body-tertiary inter fw-medium ${starSizeClass} ms-1 my-0`}>
         {reviewCount} Reviews
       </p>
     </div>

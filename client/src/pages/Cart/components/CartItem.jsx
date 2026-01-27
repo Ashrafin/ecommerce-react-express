@@ -11,9 +11,9 @@ const CartItem = ({ item }) => {
   const navigate = useNavigate();
   const prevQuantityRef = useRef(item.quantity);
   const direction = item.quantity > prevQuantityRef.current ? 1 : -1;
-  const hasDiscount = item.discountPercentage && item.discountPercentage > 0;
+  const hasDiscount = item.discount && item.discount > 0;
   const finalPrice = hasDiscount
-    ? item.price * (1 - item.discountPercentage / 100)
+    ? item.price * (1 - item.discount / 100)
     : item.price;
 
   const handleUpdateQuantity = useCartStore(store => store.updateQuantity);
@@ -48,19 +48,13 @@ const CartItem = ({ item }) => {
       />
       <div className="ms-0 ms-md-4 w-100">
         <h3
-          className="urbanist fs-4 fw-bold text-body-emphasis mb-1 pointer"
+          className="urbanist fs-5 fw-bold text-body-emphasis mt-2 mb-2 pointer"
           onClick={handleNavigateToProduct}
         >
           {item.title}
         </h3>
-        <p
-          className="inter fs-6 fw-normal text-body-secondary mb-2 pointer"
-          onClick={handleNavigateToProduct}
-        >
-          {item.description}
-        </p>
-        <div className="d-flex align-items-center mb-0">
-          {item.discountPercentage > 0 ? (
+        <div className="d-flex align-items-center mb-3">
+          {hasDiscount ? (
             <>
               <p className="urbanist fs-5 fw-bold text-success mb-0 me-2">
                 ${(finalPrice * item.quantity).toFixed(2)}
@@ -75,26 +69,17 @@ const CartItem = ({ item }) => {
             </p>
           )}
         </div>
-        {item.stock > 0 ? (
-          <p className="inter fs-8 fw-medium text-success mb-3">
-            In Stock
-          </p>
-        ) : (
-          <p className="inter fs-8 fw-medium text-danger mb-3">
-            Out of Stock
-          </p>
-        )}
         <div className="d-inline-flex flex-row align-items-center border border-2 border-warning-subtle rounded-pill px-2 position-relative">
           {item.quantity === 1 && (
             <i
               className="bi bi-trash3 fs-6 text-dark-emphasis me-2 pointer"
-              onClick={() => handleRemoveItem(item.id)}
+              onClick={() => handleRemoveItem(item.productId)}
             />
           )}
           {item.quantity > 1 && (
             <i
               className="bi bi-dash fs-4 text-dark-emphasis pointer"
-              onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+              onClick={() => handleUpdateQuantity(item.productId, item.quantity - 1)}
             />
           )}
           <div
@@ -125,7 +110,7 @@ const CartItem = ({ item }) => {
           </div>
           <i
             className="bi bi-plus fs-4 text-dark-emphasis pointer"
-            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+            onClick={() => handleUpdateQuantity(item.productId, item.quantity + 1)}
           />
         </div>
       </div>

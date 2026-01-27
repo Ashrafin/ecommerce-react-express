@@ -36,35 +36,26 @@ const CartPreview = ({ cartItems }) => {
                 alt={item.title}
               />
               <div className="ms-0 ms-md-4 w-100">
-                <h3 className="urbanist fs-4 fw-bold text-body-emphasis mb-1">
+                <h3 className="urbanist fs-5 fw-bold text-body-emphasis mb-1">
                   {item.title}
                 </h3>
                 <div className="d-flex align-items-center mb-0">
                   {item.discountPercentage > 0 ? (
                     <>
-                      <p className="urbanist fs-5 fw-bold text-success mb-0 me-2">
+                      <p className="urbanist fs-6 fw-bold text-success mb-0 me-2">
                         ${(finalPrice * item.quantity).toFixed(2)}
                       </p>
-                      <p className="urbanist fs-5 fw-medium text-secondary text-decoration-line-through text-opacity-50 mb-0">
+                      <p className="urbanist fs-6 fw-medium text-secondary text-decoration-line-through text-opacity-50 mb-0">
                         ${(item.price * item.quantity).toFixed(2)}
                       </p>
                     </>
                   ) : (
-                    <p className="urbanist fs-5 fw-bold text-success mb-0">
+                    <p className="urbanist fs-6 fw-bold text-success mb-0">
                       ${(item.price * item.quantity).toFixed(2)}
                     </p>
                   )}
                 </div>
-                {item.stock > 0 ? (
-                  <p className="inter fs-8 fw-medium text-success mb-2">
-                    In Stock
-                  </p>
-                ) : (
-                  <p className="inter fs-8 fw-medium text-danger mb-2">
-                    Out of Stock
-                  </p>
-                )}
-                <p className="urbanist fs-6 fw-semibold text-body-tertiary mb-0">
+                <p className="urbanist fs-6 fw-medium text-body-tertiary mb-0">
                   Qty:
                   <span className="fw-semibold text-body ms-1">
                     {item.quantity}

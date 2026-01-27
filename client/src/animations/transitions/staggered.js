@@ -1,6 +1,6 @@
 import { easings } from "../easings";
 
-const staggeredContainerVariants = {
+export const staggeredContainerVariants = {
   hidden: {
     opacity: 0
   },
@@ -19,7 +19,7 @@ const staggeredContainerVariants = {
   }
 };
 
-const staggeredItemVariants = {
+export const staggeredItemVariants = {
   hidden: {
     opacity: 0,
     y: 20
@@ -40,9 +40,4 @@ const staggeredItemVariants = {
       ease: easings.easeInQuad
     }
   }
-};
-
-export {
-  staggeredContainerVariants,
-  staggeredItemVariants
 };

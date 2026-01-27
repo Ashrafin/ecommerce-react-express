@@ -14,15 +14,26 @@ const ProductInformation = ({
   const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
   const discountPercentage = Math.floor(product.discountPercentage);
 
+  const handleAddToCart = () => {
+    const item = {
+      id: product.id,
+      title: product.title,
+      thumbnail: product.thumbnail,
+      price: product.price,
+      discountPercentage: product.discountPercentage
+    };
+    addItemToCart(item);
+  };
+
   return (
     <motion.div
       className="col-12 col-lg-6 col-lg-5 pt-4 ps-lg-5 pt-lg-0"
       variants={variants}
     >
-      <p className="fs-5 fw-semibold text-body-emphasis urbanist mb-2">
+      <p className="fs-6 fw-semibold text-body-emphasis urbanist mb-2">
         {product.brand}
       </p>
-      <div className="d-flex mb-3">
+      <div className="d-flex mb-0">
         <span className="badge rounded-pill bg-light text-body-emphasis text-capitalize inter fw-normal me-1 border border-light-subtle">
           {product.category}
         </span>
@@ -35,10 +46,10 @@ const ProductInformation = ({
           </span>
         ))}
       </div>
-      <h1 className="fs-1 fw-bold text-body-emphasis urbanist mt-4 mb-0">
+      <h1 className="fs-3 fw-bold text-body-emphasis urbanist mt-3 mb-0">
         {product.title}
       </h1>
-      <h3 className="fs-6 fw-normal lh-base text-body-secondary inter my-1">
+      <h3 className="fs-7 fw-medium lh-base text-body-secondary inter my-1">
         {product.description}
       </h3>
       <StarRatings
@@ -47,11 +58,11 @@ const ProductInformation = ({
         starSize="lg"
       />
       {product.stock > 0 ? (
-        <p className="inter fs-8 fw-medium text-success mb-3">
+        <p className="inter fs-8 fw-medium text-success mt-1 mb-3">
           In Stock
         </p>
       ) : (
-        <p className="inter fs-8 fw-medium text-danger mb-3">
+        <p className="inter fs-8 fw-medium text-danger mt-1 mb-3">
           Out of Stock
         </p>
       )}
@@ -79,7 +90,7 @@ const ProductInformation = ({
         </div>
         {product.stock > 0 && (
           <button
-            onClick={() => addItemToCart(product)}
+            onClick={handleAddToCart}
             type="button"
             className="btn bg-info-subtle text-info-emphasis border-0 rounded-pill urbanist fw-semibold px-4"
           >

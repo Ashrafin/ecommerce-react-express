@@ -17,7 +17,9 @@ const CategoryFilters = ({
 
   return (
     <>
-      <p className="urbanist fs-6 fw-bold mb-2">Categories</p>
+      <p className="urbanist fs-6 fw-bold mb-2">
+        Categories
+      </p>
       {availableCategories.map((category) => (
         <div key={category} className="form-check form-check-inline">
           <input

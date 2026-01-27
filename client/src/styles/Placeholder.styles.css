@@ -15,7 +15,8 @@
 .product-card-placeholder .placeholder-desc,
 .product-card-placeholder .placeholder-rating,
 .product-details-placeholder .placeholder-brand,
-.product-details-placeholder .placeholder-categories {
+.product-details-placeholder .placeholder-categories,
+.cart-info-placeholder .placeholder-header {
   min-height: 20px;
 }
 

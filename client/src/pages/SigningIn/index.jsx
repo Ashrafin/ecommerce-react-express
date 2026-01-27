@@ -15,13 +15,18 @@ const SigningInPage = () => {
   }, [loginWithRedirect]);
 
   return (
-    <Container utilityClasses="d-flex flex-column align-items-center justify-content-center vh-100">
+    <Container
+      utilityClasses="d-flex flex-column align-items-center justify-content-center"
+      customStyles={{ height: "calc(100vh - 60px)" }}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <h2 className="urbanist fw-bold fs-3 text-body-emphasis">Taking you to login...</h2>
+        <h2 className="urbanist fw-bold fs-3 text-body-emphasis">
+          Taking you to login...
+        </h2>
       </motion.div>
     </Container>
   );
